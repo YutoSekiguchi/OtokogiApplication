@@ -21,3 +21,16 @@
 .login_button:hover {
   background: var(--c-primary-darker);
 }
+
+.footer {
+  color: white;
+  min-height: 150px;
+  background-color: var(--c-blue-bg-darker);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.copyright {
+  color: #aaa;
+  font-size: 0.7rem;
+}

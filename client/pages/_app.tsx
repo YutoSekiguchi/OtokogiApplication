@@ -21,6 +21,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         </div>
       </header>
       <Component {...pageProps} />
+      <footer className={styles.footer}>
+        <p className={styles.copyright}>&copy; {new Date().getFullYear()} Yuto Sekiguchi</p>
+      </footer>
     </>
   );
 }

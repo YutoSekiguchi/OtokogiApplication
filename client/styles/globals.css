@@ -21,6 +21,7 @@ a {
   --c-primary-darker: #0f83fd;
   --c-secondary-bg: #f3f2ff;
   --c-blue-bg-lighter: #e6f2ff;
+  --c-blue-bg-darker: rgb(50, 83, 97);
 
   --rounded-xs: 4px;
   --rounded-sm: 7px;
