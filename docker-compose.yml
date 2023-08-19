@@ -1,0 +1,65 @@
+version: '3'
+services:
+  mysql:
+    container_name: otokogi-mysql
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    env_file: ./.env
+    volumes:
+      - ./db/data:/var/lib/mysql
+      - ./db/log:/var/log/mysql
+    ports:
+      - "7552:3306"
+    networks:
+      - otokogi
+  
+  phpmyadmin:
+    container_name: otokogi-phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 7553:80
+    env_file: ./.env
+    depends_on:
+      - mysql
+    networks:
+      - otokogi
+  
+  api:
+    image: openjdk:17
+    container_name: otokogi-api
+    # build:
+    #   context: ./api
+    #   dockerfile: Dockerfile
+    env_file: ./.env
+    tty: true
+    working_dir: /app
+    command: java -jar build/libs/api-0.0.1-SNAPSHOT.jar
+    volumes:
+      - ./api:/app
+    ports:
+      - 7551:8080
+    networks:
+      - otokogi
+
+  client:
+    container_name: otokogi-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+      - ./client/:/app
+      - /app/node_modules
+      - /app/dist
+    env_file: ./.env
+    ports:
+      - 7550:3000
+    networks:
+      - otokogi
+
+volumes:
+  mysql:
+
+networks:
+  otokogi:
+    driver: bridge
