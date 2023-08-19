@@ -36,6 +36,17 @@
   font-weight: bolder;
 }
 
+.start_button {
+  margin-top: 1rem;
+  width: 80%;
+  height: 52px;
+  color: white;
+  font-weight: 600;
+  font-size: 1.2rem;
+  background: var(--c-primary);
+  border-radius: var(--rounded-sm);
+}
+
 .grid {
   display: flex;
   align-items: center;

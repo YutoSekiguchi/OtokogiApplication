@@ -25,6 +25,10 @@ const Home: NextPage = () => {
           Otokoは旅行先での<br />男気じゃんけんの結果を記録してくれます
         </p>
 
+        <button className={styles.start_button}>
+          はじめる
+        </button>
+
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h2>Documentation &rarr;</h2>
