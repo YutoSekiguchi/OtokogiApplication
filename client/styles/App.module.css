@@ -1,0 +1,23 @@
+.header {
+  padding: 1rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.title {
+  margin: 0;
+  line-height: 1.15;
+  font-size: 1.5rem;
+  text-align: center;
+}
+.login_button {
+  width: 92px;
+  height: 36px;
+  color: white;
+  font-weight: 600;
+  background: var(--c-primary);
+  border-radius: var(--rounded-sm);
+}
+.login_button:hover {
+  background: var(--c-primary-darker);
+}

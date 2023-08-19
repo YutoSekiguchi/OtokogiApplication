@@ -13,4 +13,20 @@ a {
 
 * {
   box-sizing: border-box;
+  border: none;
+}
+
+:root {
+  --c-primary: #3ea8ff;
+  --c-primary-darker: #0f83fd;
+  --c-secondary-bg: #f3f2ff;
+  --c-blue-bg-lighter: #e6f2ff;
+
+  --rounded-xs: 4px;
+  --rounded-sm: 7px;
+  --rounded-md: 10px;
+  --rounded-lg: 14px;
+  --rounded-xl: 20px;
+  --rounded-full: 99rem;
+  --rounded-publication: 25%;
 }
