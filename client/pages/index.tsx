@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { PROJECT_NAME } from '../configs/settings'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
@@ -7,15 +8,21 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>漢気サバイバー</title>
+        <title>{PROJECT_NAME}</title>
         <meta name="description" content="会計を漢気じゃんけんで決めるためのアプリケーション" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
       <main className={styles.main}>
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
+          旅行での漢気を記録しよう
+        </p>
+
+        <Image src="/logo.png" alt="Otoko Logo" width={280} height={82} />
+        <Image src="/main.svg" alt="money img" width={160} height={160} />
+
+        <p className={styles.description}>
+          Otokoは旅行先での<br />男気じゃんけんの結果を記録してくれます
         </p>
 
         <div className={styles.grid}>

@@ -3,7 +3,7 @@
 }
 
 .main {
-  min-height: 100vh;
+  /* min-height: 100vh; */
   padding: 1rem 0;
   flex: 1;
   display: flex;
@@ -30,21 +30,10 @@
 
 .description {
   text-align: center;
-}
-
-.description {
-  margin: 4rem 0;
+  margin: 1rem 0 0 0;
   line-height: 1.5;
-  font-size: 1.5rem;
-}
-
-.code {
-  background: #fafafa;
-  border-radius: 5px;
-  padding: 0.75rem;
-  font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
+  font-size: 1rem;
+  font-weight: bolder;
 }
 
 .grid {
