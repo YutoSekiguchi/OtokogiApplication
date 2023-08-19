@@ -21,6 +21,9 @@
 .login_button:hover {
   background: var(--c-primary-darker);
 }
+.user_icon {
+  border-radius: var(--rounded-full);
+}
 
 .footer {
   color: white;
