@@ -31,6 +31,9 @@
   background: var(--c-primary);
   border-radius: var(--rounded-sm);
 }
+.start_button:hover {
+  background: var(--c-primary-darker);
+}
 
 .grid {
   display: flex;
