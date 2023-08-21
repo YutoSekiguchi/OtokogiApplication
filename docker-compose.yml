@@ -34,9 +34,11 @@ services:
     env_file: ./.env
     tty: true
     working_dir: /app
-    command: java -jar build/libs/api-0.0.1-SNAPSHOT.jar
+    # command: java -jar build/libs/api-0.0.1-SNAPSHOT.jar
     volumes:
       - ./api:/app
+    depends_on:
+      - mysql
     ports:
       - 7551:8080
     networks:
@@ -48,8 +50,6 @@ services:
       context: ./client
       dockerfile: Dockerfile
     volumes:
-      - ./client/:/app
-      - /app/node_modules
       - /app/dist
     env_file: ./.env
     ports:
