@@ -9,8 +9,10 @@ RUN yarn install
 
 COPY . .
 
-EXPOSE 3000
-
 RUN yarn build
+
+COPY .next .next
+
+EXPOSE 3000
 
 CMD [ "yarn", "start" ]
