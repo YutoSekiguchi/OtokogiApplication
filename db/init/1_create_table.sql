@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS members (
   rid INT NOT NULL,
   name TEXT NOT NULL,
   uid INT NOT NULL,
-  rank INT NOT NULL,
+  ranking INT NOT NULL,
   total_price INT NOT NULL,
   total_drive INT NOT NULL,
   total_win INT NOT NULL,
