@@ -1,17 +1,16 @@
 package com.example.api.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class BaseAPIController {
-	@RequestMapping(path="/", method=RequestMethod.GET)
+	@GetMapping("/")
 	public String base() {
 		return "Hello!!";
 	}
 	
-	@RequestMapping(path="/v1", method=RequestMethod.GET)
+	@GetMapping("/v1")
 	public String basev1() {
 		return "otokogiAPI";
 	}
