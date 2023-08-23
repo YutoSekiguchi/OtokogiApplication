@@ -8,9 +8,9 @@ import Head from 'next/head'
 function MyApp({ Component, pageProps:{session, ...pageProps} }: AppProps) {
   return (
     <SessionProvider session={session}>
-      <Head>
+      {/* <Head>
         <noscript id="__next_css__DO_NOT_USE__" />
-      </Head>
+      </Head> */}
       <Header />
       <Component {...pageProps} />
       <footer className={styles.footer}>
