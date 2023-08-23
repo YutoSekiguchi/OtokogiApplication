@@ -2,11 +2,22 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { PROJECT_NAME } from '../configs/settings'
 import Image from 'next/image'
+import { signIn } from 'next-auth/react'
 import styles from '../styles/Home.module.css'
+import { useUserStore } from '../stores/user'
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
+
+  const user = useUserStore((state) => state.user);
+
+  const router = useRouter();
+  const moveNewPage = () => {
+    router.push("/new");
+  }
+
   return (
-    <div className={styles.container}>
+    <div className="container">
       <Head>
         <title>{PROJECT_NAME}</title>
         <meta name="description" content="会計を漢気じゃんけんで決めるためのアプリケーション" />
@@ -25,10 +36,18 @@ const Home: NextPage = () => {
           Otokoは旅行先での<br />男気じゃんけんの結果を記録してくれます
         </p>
 
-        <button className={styles.start_button}>
-          はじめる
-        </button>
-
+        {
+          !Object.keys(user).length
+          ?
+          <button className={styles.start_button} onClick={() => signIn()}>
+            ログイン
+          </button>
+          :
+          <button className={styles.start_button} onClick={moveNewPage}>
+            はじめる
+          </button>
+        }
+        
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h2>Documentation &rarr;</h2>
