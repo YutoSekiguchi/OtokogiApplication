@@ -6,8 +6,10 @@ import styles from '../../styles/App.module.css'
 import { PROJECT_NAME } from '../../configs/settings';
 import { useUserStore } from '../../stores/user';
 import { login } from '../../services/user';
+import { useRouter } from 'next/router';
 
 const Header: NextPage = () => {
+  const router = useRouter();
   const {data: session} = useSession();
   const user = useUserStore((state) => state.user);
   const setUserData = useUserStore((state) => state.setUserData);
@@ -26,7 +28,7 @@ const Header: NextPage = () => {
 
   return (
     <header className={styles.header}>
-      <h1 className={styles.title}>
+      <h1 className={styles.title} onClick={() => {router.push("/")}}>
         {PROJECT_NAME}
       </h1>
       <div className={styles.header_items}>
