@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSession, signIn } from 'next-auth/react';
 import { NextPage } from 'next';
 import Image from 'next/image'
 import styles from '../../styles/App.module.css'
 import { PROJECT_NAME } from '../../configs/settings';
+import { useUserStore } from '../../stores/user';
+import { login } from '../../services/user';
 
 const Header: NextPage = () => {
   const {data: session} = useSession();
+  const user = useUserStore((state) => state.user);
+  const setUserData = useUserStore((state) => state.setUserData);
 
-  const login = () => {
-    alert("aaaa");
-  }
+  useEffect(() => {
+    const getUserData = async() => {
+      if(session && session.user && session.user.email !== null && session.user.email !== undefined) {
+        const res =  await login(session.user.email);
+        setUserData(res);
+      }
+    }
+    if(!Object.keys(user).length) {
+      getUserData();
+    }
+  }, [session])
 
   return (
     <header className={styles.header}>
