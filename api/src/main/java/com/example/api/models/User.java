@@ -2,6 +2,8 @@ package com.example.api.models;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,48 +16,49 @@ import jakarta.persistence.Table;
 @Table(name="users")
 public class User {
 	@Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
 
-   @Column(name = "name", nullable = false)
-   private String name;
+	@Column(name = "name", nullable = false)
+	private String name;
 
-   @Column(name = "display_name")
-   private String displayName;
+	@Column(name = "display_name")
+	private String displayName;
 
-   @Column(name = "mail", nullable = false)
-   private String mail;
+	@Column(name = "mail", nullable = false)
+	private String mail;
+	
+	@Column(name = "image", nullable = false)
+	private String image;
+	
+	@Column(name = "friend_code", nullable = false)
+	private String friendCode;
+	
+	@CreationTimestamp
+	@Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+	private LocalDateTime createdAt;
+	
+	public User() {
+	       // デフォルトコンストラクタ
+	}
 
-   @Column(name = "image", nullable = false)
-   private String image;
-
-   @Column(name = "friend_code", nullable = false)
-   private String friendCode;
-
-   @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-   private LocalDateTime createdAt;
-
-   public User() {
-       // デフォルトコンストラクタ
-   }
-
-   public User(String name, String displayName, String mail, String image, String friendCode) {
-       this.name = name;
-       this.displayName = displayName;
-       this.mail = mail;
-       this.image = image;
-       this.friendCode = friendCode;
-       this.createdAt = LocalDateTime.now();
-   }
+	public User(String name, String displayName, String mail, String image, String friendCode) {
+		this.name = name;
+        this.displayName = displayName;
+        this.mail = mail;
+        this.image = image;
+        this.friendCode = friendCode;
+        this.createdAt = LocalDateTime.now();
+    }
 
    // ゲッターとセッター
-   public Long getId() {
-       return id;
-   }
-
-   public String getName() {
-       return name;
-   }
+	public Long getId() {
+        return id;
+    }
+	public String getName() {
+        return name;
+    }
 
    public void setName(String name) {
        this.name = name;
