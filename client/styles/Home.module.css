@@ -1,7 +1,3 @@
-.container {
-  background-color: var(--c-secondary-bg);
-}
-
 .main {
   /* min-height: 100vh; */
   padding: 1rem 0;
@@ -32,6 +28,7 @@
   border-radius: var(--rounded-sm);
 }
 .start_button:hover {
+  cursor: pointer;
   background: var(--c-primary-darker);
 }
 

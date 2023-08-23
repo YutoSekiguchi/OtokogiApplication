@@ -10,6 +10,9 @@
   font-size: 1.5rem;
   text-align: center;
 }
+.title:hover {
+  cursor: pointer;
+}
 .login_button {
   width: 92px;
   height: 36px;
@@ -19,6 +22,7 @@
   border-radius: var(--rounded-sm);
 }
 .login_button:hover {
+  cursor: pointer;
   background: var(--c-primary-darker);
 }
 .user_icon {

@@ -22,6 +22,7 @@ a {
   --c-secondary-bg: #f3f2ff;
   --c-blue-bg-lighter: #e6f2ff;
   --c-blue-bg-darker: rgb(50, 83, 97);
+  --c-gray-bg-lighter: rgb(249, 250, 251);
 
   --rounded-xs: 4px;
   --rounded-sm: 7px;
@@ -30,4 +31,8 @@ a {
   --rounded-xl: 20px;
   --rounded-full: 99rem;
   --rounded-publication: 25%;
+}
+
+.container {
+  background-color: var(--c-secondary-bg);
 }
