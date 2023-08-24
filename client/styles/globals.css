@@ -24,6 +24,8 @@ a {
   --c-blue-bg-darker: rgb(50, 83, 97);
   --c-gray-bg-lighter: rgb(249, 250, 251);
 
+  --c-gray-border: rgb(229, 231, 235);
+
   --rounded-xs: 4px;
   --rounded-sm: 7px;
   --rounded-md: 10px;

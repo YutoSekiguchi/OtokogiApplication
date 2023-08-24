@@ -17,13 +17,83 @@
   font-weight: bolder;
 }
 
-.form_group > .text_form {
+.small_label {
+  font-size: 0.5rem;
+  font-weight: bolder;
+  color: #bbb;
+  margin-left: 5px;
+}
+
+.text_form {
   border: 1px solid #eee;
   border-radius: 6px;
   width: 100%;
   max-width: 520px;
   height: 48px;
   background: var(--c-gray-bg-lighter);
-  font-size: 18px;
+  font-size: 12px;
   padding: 0 1rem;
+}
+
+.name_form {
+  display: flex;
+  align-items: center;
+}
+
+.name_form > .text_form {
+  width: 80%;
+}
+
+.form_add_button {
+  width: 20%;
+  max-width: 100px;
+  color: white;
+  height: 40px;
+  background-color: var(--c-primary);
+  border-top-right-radius: var(--rounded-sm);
+  border-bottom-right-radius: var(--rounded-sm);
+}
+
+.suggestion_list_title {
+  margin-bottom: 0px;
+}
+.suggestion_list {
+  max-height: 300px;
+  border-radius: var(--rounded-sm);
+  overflow-y: auto;
+  background: var(--c-gray-bg-lighter);
+}
+.suggestion_description {
+  padding: 0 1rem;
+  border-bottom: 1px solid var(--c-gray-border);
+  display: flex;
+}
+.suggestion_description p {
+  
+}
+
+.member_list {
+  display: flex;
+  flex-wrap: wrap;
+  /* overflow-x: auto; */
+  margin-top: 10px;
+}
+
+.member_chip {
+  margin-right: 8px;
+  margin-top: 2px;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  border: 1px solid var(--c-gray-border);
+  border-radius: var(--rounded-xl);
+  background: white;
+  display: flex;
+  align-items: center;
+}
+
+.member_chip p {
+  margin: 0px
+}
+.member_chip .icon {
+  color: #aaa;
+  font-size: 20px;
 }
