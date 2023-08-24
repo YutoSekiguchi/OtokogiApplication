@@ -97,3 +97,12 @@
   color: #aaa;
   font-size: 20px;
 }
+
+.submit_button {
+  margin-top: 3rem;
+  color: white;
+  background-color: var(--c-primary);
+  border-radius: var(--rounded-sm);
+  width: 100%;
+  height: 42px;
+}
