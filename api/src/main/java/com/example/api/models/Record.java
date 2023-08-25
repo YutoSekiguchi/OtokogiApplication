@@ -19,13 +19,13 @@ public class Record {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "title")
+	@Column(name = "title", nullable = false)
 	private String title;
 	
-	@Column(name = "date")
+	@Column(name = "date", nullable = false)
 	private String date;
 	
-	@Column(name = "total_price")
+	@Column(name = "total_price", nullable = false)
 	private int totalPrice;
 	
 	@CreationTimestamp
