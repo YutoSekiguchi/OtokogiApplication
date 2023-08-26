@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="records")
-public class Record {
+public class RecordModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -26,16 +26,16 @@ public class Record {
 	private String date;
 	
 	@Column(name = "total_price", nullable = false)
-	private int totalPrice;
+	private Integer totalPrice;
 	
 	@CreationTimestamp
 	@Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
 	private LocalDateTime createdAt;
 	
-	public Record() {
+	public RecordModel() {
 	}
 	
-	public Record(String title, String date, int totalPrice) {
+	public RecordModel(String title, String date, Integer totalPrice) {
 		this.title = title;
 		this.date = date;
 		this.totalPrice = totalPrice;
@@ -61,10 +61,10 @@ public class Record {
 		this.date = date;
 	}
 	
-	public int getTotalPrice() {
+	public Integer getTotalPrice() {
 		return totalPrice;
 	}
-	public void setTotalPrice(int totalPrice) {
+	public void setTotalPrice(Integer totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 	
