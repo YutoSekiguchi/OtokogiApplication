@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSession, signIn } from 'next-auth/react';
 import { NextPage } from 'next';
 import Image from 'next/image'
@@ -13,6 +13,25 @@ const Header: NextPage = () => {
   const {data: session} = useSession();
   const user = useUserStore((state) => state.user);
   const setUserData = useUserStore((state) => state.setUserData);
+  const [isDropdown, setIsDropdown] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const buttonRef = useRef<HTMLDivElement | null>(null);
+
+  // dropdown要素の削除に関するuseEffect
+  useEffect(() => {
+    // クリックイベントを定義
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (dropdownRef.current && buttonRef.current && !dropdownRef.current.contains(event.target as Node) && !buttonRef.current.contains(event.target as Node)) {
+        setIsDropdown(false);
+      }
+    }
+    // グローバルでクリックイベントを監視
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      // コンポーネントがアンマウントされた際にクリックイベントリスナーを削除
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const getUserData = async() => {
@@ -26,6 +45,14 @@ const Header: NextPage = () => {
     }
   }, [session])
 
+  const DropDownMenu = () => {
+    return (
+      <div ref={dropdownRef} className={styles.dropdown}>
+        aaa
+      </div>
+    );
+  }
+
   return (
     <header className={styles.header}>
       <h1 className={styles.title} onClick={() => {router.push("/")}}>
@@ -37,8 +64,16 @@ const Header: NextPage = () => {
           ?
           <>
             {session.user?.image && (
-              <div>
-                <Image className={styles.user_icon} src={session.user?.image} alt="" width={36} height={36} />
+              <div ref={buttonRef} className={styles.user_icon_box}>
+                <Image 
+                  className={styles.user_icon}
+                  src={session.user?.image}
+                  onClick={() => { setIsDropdown(prev => !prev) }}
+                  alt="" width={36} height={36}
+                />
+                {
+                  isDropdown && <DropDownMenu />
+                }
               </div>
             )}
           </>
