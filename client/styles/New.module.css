@@ -28,7 +28,6 @@
   border: 1px solid #eee;
   border-radius: 6px;
   width: 100%;
-  max-width: 520px;
   height: 48px;
   background: var(--c-gray-bg-lighter);
   font-size: 12px;
@@ -41,14 +40,15 @@
 }
 
 .name_form > .text_form {
-  width: 80%;
+  min-width: 80%;
+  border-radius: 0px;
 }
 
 .form_add_button {
   width: 20%;
   max-width: 100px;
   color: white;
-  height: 40px;
+  height: 46px;
   background-color: var(--c-primary);
   border-top-right-radius: var(--rounded-sm);
   border-bottom-right-radius: var(--rounded-sm);
