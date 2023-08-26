@@ -30,7 +30,7 @@ public class UserController {
    @Autowired
    private UserService userService;
    
-   @GetMapping("/{id}")
+   @GetMapping("/get/{id}")
    public ResponseEntity<User> getUserById(@PathVariable Long id) {
 	   Optional<User> userOptional = userRepository.findById(id);
 
@@ -40,6 +40,13 @@ public class UserController {
        } else {
             return ResponseEntity.notFound().build();
        }
+   }
+   
+   // フレンドコードからユーザの取得
+   @GetMapping("/get/{friendcode}/friendcode")
+   public ResponseEntity<User> getUserByFriendCode(@PathVariable String friendCode) {
+	   User gettedUser = userRepository.findByFriendCode(friendCode);
+	   return ResponseEntity.ok(gettedUser);
    }
    
    @PostMapping("/signin")
