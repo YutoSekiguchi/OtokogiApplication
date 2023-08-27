@@ -12,3 +12,7 @@ export interface PostUserDataType {
 }
 
 export interface UserDataType extends PostUserDataType, IDAndCreatedAtType {}
+
+export interface FriendCardPropsType {
+  user: UserDataType;
+}
