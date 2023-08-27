@@ -1,0 +1,59 @@
+.title {
+  padding: 1.3rem 0px 0.2rem 0px;
+  margin: 0px;
+  width: 80%;
+  font-size: 1rem;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.friend_list {
+  width: 80%;
+  max-width: 520px;
+  margin: 0% auto 10% auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background-color: white;
+  border-radius: var(--rounded-md);
+}
+.friend {
+  display: flex;
+  padding: 5px 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+.left_side {
+  display: flex;
+  align-items: center;
+}
+.user_icon {
+  border-radius: var(--rounded-full);
+}
+.user_name_and_code {
+  margin: 0.5rem 1rem;
+}
+.user_name {
+  font-weight: bolder;
+  margin: 0px;
+  font-size: 0.8rem;
+}
+.user_code {
+  margin: 0px;
+  color: #aaa;
+  font-size: 0.75rem;
+}
+.right_side {
+  display: flex;
+  align-items: center;
+}
+.unfollow_button {
+  color: #aaa;
+  border: 1px solid #aaa;
+  background: white;
+  border-radius: var(--rounded-xl);
+  padding: 0.5rem 1rem;
+}
+.unfollow_button:hover {
+  background: var(--c-gray-bg-lighter);
+  cursor: pointer;
+}
