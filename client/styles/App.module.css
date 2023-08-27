@@ -35,6 +35,7 @@
 }
 .user_icon_box > .dropdown {
   position: absolute;
+  right: 1rem;
   top: 36px;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -43,6 +44,48 @@
   box-shadow: 0 0 0 1px #96a3b31a, 0 8px 28px -4px #96a3b34d;
   /* animation: usePopover_popoverIn__E6NnO .2s ease; */
   z-index: 250;
+  min-width: 252px;
+}
+.dropdown_item_box {
+  padding: 5px 0px;
+  margin: 5px 0px;
+  border-bottom: 1px solid #eee;
+}
+.dropdown_item_box_last {
+  padding: 5px 0px;
+  margin: 5px 0px;
+}
+.dropdown_item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 3px 13px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: left;
+}
+.dropdown_item_text {
+  margin: 0px;
+}
+.dropdown_item_icon {
+  color: #aaa;
+  margin-right: 0.7rem;
+}
+.name {
+  font-size: 0.8rem;
+  font-weight: bold;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mail {
+  color: #aaa;
+  font-size: 0.6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .footer {
