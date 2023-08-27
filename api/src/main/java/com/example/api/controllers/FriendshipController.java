@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.api.models.Friendship;
@@ -33,7 +32,7 @@ public class FriendshipController {
 	
 	// 自分のフレンドの取得
 	@GetMapping("/get/{uid}/myfriend")
-	public ResponseEntity<List<User>> getFriendshipsByuid(@PathVariable Long uid) {
+	public ResponseEntity<List<User>> getFriendshipsByUid(@PathVariable Long uid) {
 		List<User> myFriendList = friendshipService.getMyFriends(uid);
 		return ResponseEntity.ok(myFriendList);
 	}
@@ -53,12 +52,12 @@ public class FriendshipController {
 	}
 	
 	// statusの変更
-	@PutMapping("/{id}/change/status")
-	public ResponseEntity<Friendship> putFriendshipById(@PathVariable Long id, @RequestParam Integer newStatus) {
+	@PutMapping("/put/status/{id}/{status}")
+	public ResponseEntity<Friendship> putFriendshipById(@PathVariable Long id, @PathVariable Integer status) {
 		Optional<Friendship> optionalFriendship = friendshipRepository.findById(id);
         if (optionalFriendship.isPresent()) {
             Friendship friendship = optionalFriendship.get();
-            friendship.setStatus(newStatus);
+            friendship.setStatus(status);
             friendshipRepository.save(friendship); // ステータスを更新して保存
             return ResponseEntity.ok(friendship);
         } else {
