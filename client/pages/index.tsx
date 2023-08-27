@@ -37,7 +37,7 @@ const Home: NextPage = () => {
         </p>
 
         {
-          !Object.keys(user).length
+          user === null
           ?
           <button className={styles.start_button} onClick={() => signIn()}>
             ログイン
