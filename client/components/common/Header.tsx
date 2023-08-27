@@ -7,6 +7,8 @@ import { PROJECT_NAME } from '../../configs/settings';
 import { useUserStore } from '../../stores/user';
 import { login } from '../../services/user';
 import { useRouter } from 'next/router';
+import { EpAvatar } from './icons/EpAvatar';
+import { OiAccountLogout } from './icons/OiAccountLogout';
 
 const Header: NextPage = () => {
   const router = useRouter();
@@ -40,16 +42,42 @@ const Header: NextPage = () => {
         setUserData(res);
       }
     }
-    if(!Object.keys(user).length) {
+    if(user === null) {
       getUserData();
     }
   }, [session])
 
   const DropDownMenu = () => {
     return (
-      <div ref={dropdownRef} className={styles.dropdown}>
-        aaa
-      </div>
+      <>
+        {
+          user !== null &&
+          <div ref={dropdownRef} className={styles.dropdown}>
+            <div className={styles.dropdown_item_box}>
+              <div className={styles.dropdown_item}>
+                <p className={`${styles.dropdown_item_text} ${styles.name}`}>{user.displayName}</p>
+              </div>
+              <div className={styles.dropdown_item}>
+                <p className={`${styles.dropdown_item_text} ${styles.mail}`}>
+                  {user.mail}
+                </p>
+              </div>
+            </div>
+            <div className={styles.dropdown_item_box}>
+              <div className={styles.dropdown_item}>
+                <EpAvatar className={styles.dropdown_item_icon} />
+                <p className={`${styles.dropdown_item_text}`}>フレンド一覧</p>
+              </div>
+            </div>
+            <div className={styles.dropdown_item_box_last}>
+              <div className={styles.dropdown_item}>
+                <OiAccountLogout className={styles.dropdown_item_icon} />
+                <p className={`${styles.dropdown_item_text}`}>ログアウト</p>
+              </div>
+            </div>
+          </div>
+        }
+      </>
     );
   }
 
