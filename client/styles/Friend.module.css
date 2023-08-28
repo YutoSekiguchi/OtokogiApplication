@@ -53,7 +53,58 @@
   border-radius: var(--rounded-xl);
   padding: 0.5rem 1rem;
 }
-.unfollow_button:hover {
+.unfollow_button:hover, .follow_button:hover {
   background: var(--c-gray-bg-lighter);
   cursor: pointer;
+}
+.follow_button {
+  color: var(--c-primary);
+  border: 1px solid var(--c-primary);
+  background: white;
+  border-radius: var(--rounded-xl);
+  padding: 0.5rem 1rem;
+}
+
+.friend_search_form_box {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+.friend_search_form {
+  border: 1px solid #eee;
+  border-top-left-radius: var(--rounded-sm);
+  border-bottom-left-radius: var(--rounded-sm);
+  width: 100%;
+  height: 48px;
+  background: var(--c-gray-bg-lighter);
+  font-size: 12px;
+  padding: 0 1rem;
+}
+.form_search_button {
+  width: 20%;
+  max-width: 100px;
+  color: white;
+  height: 46px;
+  background-color: var(--c-primary);
+  border-top-right-radius: var(--rounded-sm);
+  border-bottom-right-radius: var(--rounded-sm);
+}
+.form_search_button:hover {
+  cursor: pointer;
+}
+.notfound_text {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+}
+.suggest_user {
+  margin: 2rem auto;
+  width: 60%;
+  background: white;
+  border-radius: var(--rounded-md);
+  max-width: 520px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
