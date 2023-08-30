@@ -1,16 +1,80 @@
 import styles from "../../styles/Friend.module.css";
 import Image from "next/image";
-import { FriendCardPropsType } from "../../@types/user";
+import { FriendCardPropsType, UserDataType } from "../../@types/user";
+import { useUserStore } from "../../stores/user";
+import { useEffect, useState } from "react";
+import { getFriendshipsByUID, postFriendship } from "../../services/friendships";
+import { PostFriendshipDataType } from "../../@types/friendship";
 
 const FriendCard: ({user}:FriendCardPropsType)=>JSX.Element = ({user}: FriendCardPropsType) => {
 
+  const myUser = useUserStore((state) => state.user);
+  const [myFriendList, setMyFriendList] = useState<(UserDataType)[]>([]);
+  const [applingUserList, setApplingUserList] = useState<|{id: number}[]>([]);
+
+  const hasObjectWithId = (id: number): boolean => {
+    return myFriendList.some(obj => obj.id === id);
+  }
+
+  const appriedObjectWithId = (id: number): boolean => {
+    return applingUserList.some(obj => obj.id === id);
+  }
+
+  const follow = async() => {
+    if(!(appriedObjectWithId(user?.id)) && !(hasObjectWithId(user?.id))) {
+      const postData: PostFriendshipDataType = {
+        uid: myUser!.id,
+        friendId: user.id,
+        status: 1,
+      }
+      const newFriendData = await postFriendship(postData);
+      setApplingUserList([...applingUserList, {id: user.id}]);
+    }
+  }
+
+  const unfollow = async() => {
+    alert("未実装です")
+  }
+
+  useEffect(() => {
+    const getMyFriend = async() => {
+      if(myUser != null) {
+        const res = await getFriendshipsByUID(myUser.id);
+        setMyFriendList(res);
+      }
+    }
+    getMyFriend();
+  }, [myUser])
+
   const FriendRightSide = () => {
     return (
-      <button
-        className={styles.unfollow_button}
-      >
-        削除
-      </button>
+      <>
+        {
+          (hasObjectWithId(user?.id))
+          ?
+          <button
+            className={styles.unfollow_button}
+          >
+            削除
+          </button>
+          :
+            (appriedObjectWithId(user?.id))
+            ?
+            <button
+              className={styles.follow_button}
+              onClick={unfollow}
+            >
+              フォローをはずす
+            </button>
+            :
+            <button
+              className={styles.follow_button}
+              onClick={follow}
+            >
+              フォロー
+            </button>
+        }
+      </>
     );
   }
 
