@@ -25,3 +25,13 @@ export const login = async(mail: string) => {
     throw(error)
   }
 }
+
+export const getUserByFriendCode = async(friendCode: string) => {
+  const url = `${USER_API_URL}/get/${friendCode}/friendcode`;
+  try {
+    const res = await axios.get(url);
+    return returnData(res);
+  } catch (error) {
+    throw(error);
+  }
+}
