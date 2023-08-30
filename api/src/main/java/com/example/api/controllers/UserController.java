@@ -44,8 +44,8 @@ public class UserController {
    
    // フレンドコードからユーザの取得
    @GetMapping("/get/{friendcode}/friendcode")
-   public ResponseEntity<User> getUserByFriendCode(@PathVariable String friendCode) {
-	   User gettedUser = userRepository.findByFriendCode(friendCode);
+   public ResponseEntity<User> getUserByFriendCode(@PathVariable String friendcode) {
+	   User gettedUser = userRepository.findByFriendCode(friendcode);
 	   return ResponseEntity.ok(gettedUser);
    }
    
