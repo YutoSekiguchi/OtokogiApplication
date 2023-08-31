@@ -28,6 +28,9 @@ public class RecordModel {
 	@Column(name = "total_price", nullable = false)
 	private Integer totalPrice;
 	
+	@Column(name = "url_code", nullable = false)
+	private String urlCode;
+	
 	@CreationTimestamp
 	@Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
 	private LocalDateTime createdAt;
@@ -35,10 +38,11 @@ public class RecordModel {
 	public RecordModel() {
 	}
 	
-	public RecordModel(String title, String date, Integer totalPrice) {
+	public RecordModel(String title, String date, Integer totalPrice, String urlCode) {
 		this.title = title;
 		this.date = date;
 		this.totalPrice = totalPrice;
+		this.urlCode = urlCode;
 		this.createdAt = LocalDateTime.now();
 	}
 	
@@ -66,6 +70,13 @@ public class RecordModel {
 	}
 	public void setTotalPrice(Integer totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+	
+	public String getUrlCode() {
+		return urlCode;
+	}
+	public void setUrlCode(String urlCode) {
+		this.urlCode = urlCode;
 	}
 	
 	public LocalDateTime getCreatedAt() {
