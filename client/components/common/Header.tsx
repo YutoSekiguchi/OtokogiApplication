@@ -9,6 +9,7 @@ import { login } from '../../services/user';
 import { useRouter } from 'next/router';
 import { EpAvatar } from './icons/EpAvatar';
 import { OiAccountLogout } from './icons/OiAccountLogout';
+import SubwayAdmin1 from './icons/SubwayAdmin1';
 
 const Header: NextPage = () => {
   const router = useRouter();
@@ -18,6 +19,10 @@ const Header: NextPage = () => {
   const [isDropdown, setIsDropdown] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLDivElement | null>(null);
+
+  const moveToFriendPage = () => {
+    router.push("/friend");
+  }
 
   // dropdown要素の削除に関するuseEffect
   useEffect(() => {
@@ -64,9 +69,14 @@ const Header: NextPage = () => {
               </div>
             </div>
             <div className={styles.dropdown_item_box}>
-              <div className={styles.dropdown_item}>
+              <div className={styles.dropdown_item} onClick={moveToFriendPage}>
                 <EpAvatar className={styles.dropdown_item_icon} />
                 <p className={`${styles.dropdown_item_text}`}>フレンド一覧</p>
+              </div>
+              <hr />
+              <div className={styles.dropdown_item} onClick={() => {router.push("/friend/new")}}>
+                <SubwayAdmin1 className={styles.dropdown_item_icon} />
+                <p className={`${styles.dropdown_item_text}`}>フレンド追加</p>
               </div>
             </div>
             <div className={styles.dropdown_item_box_last}>
