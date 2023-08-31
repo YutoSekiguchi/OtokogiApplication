@@ -2,35 +2,38 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { PROJECT_NAME } from '../configs/settings';
 import styles from "../styles/New.module.css"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { generateSuggestions } from '../modules/generateSuggestion';
 import { CiCloseSm } from '../components/common/icons/CiCloseSm';
 import { postRecord } from '../services/record';
 import { PostRecordDataType } from '../@types/record';
 import { getToday } from '../modules/getToday';
 import { useRecordStore } from '../stores/record';
+import { UserDataType, memberNameAndIDType } from '../@types/user';
+import { useUserStore } from '../stores/user';
+import { getFriendshipsByUID } from '../services/friendships';
+import FriendCardImage from "../components/friend/FriendCardImage";
 
 const New: NextPage = () => {
 
+  const myUser = useUserStore((state) => state.user);
   const [groupName, setGroupName] = useState<string>('');
   const [memberName, setMemberName] = useState<string>('');
-  const [memberList, setMemberList] = useState<string[]>([]);
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [memberList, setMemberList] = useState<memberNameAndIDType[]>([]);
+  const [suggestions, setSuggestions] = useState<UserDataType[]>([]);
+  const [myFriendList, setMyFriendList] = useState<UserDataType[]>([]);
 
   const setRecordData = useRecordStore((state) => state.setRecordData);
 
-  const mockSuggestions = [
-    'Apple',
-    'Banana',
-    'Cherry',
-    'Date',
-    'Grape',
-    'Lemon',
-    'Orange',
-    'Pear',
-    'Strawberry',
-    'Watermelon',
-  ];
+  useEffect(() => {
+    const getMyFriend = async() => {
+      if(myUser != null) {
+        const res = await getFriendshipsByUID(myUser.id);
+        setMyFriendList(res);
+      }
+    }
+    getMyFriend();
+  }, [myUser])
 
   const changeGroupName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGroupName(e.target.value);
@@ -40,22 +43,32 @@ const New: NextPage = () => {
     setMemberName(e.target.value);
     // ここで候補を生成するロジックを実装
     // TODO: stringだけじゃなくてみんなのIDとか持ってくる
-    const newSuggestions = generateSuggestions(e.target.value, mockSuggestions);
+    if (e.target.value === "") {
+      return
+    }
+    const newSuggestions = generateSuggestions(e.target.value, myFriendList);
     setSuggestions(newSuggestions);
   }
 
-  const handleSuggestionClick = (suggestion: string) => {
-    setMemberName(suggestion);
-    setSuggestions([]); // 候補をクリックしたら候補リストをクリア
-  };
-
-  const addMemberList = () => {
+  const addMemberListFromTextBox = () => {
     const name = memberName;
     setMemberName('');
     if (name === "") {
       return;
     }
-    setMemberList([...memberList, name]);
+    setMemberList([...memberList, {id: null, displayName: name, image: "/noimage.png"}]);
+  }
+
+  const addMemberListFromFriend = (suggestion: UserDataType) => {
+    var name = "";
+    if (suggestion.displayName === null) {
+      name = suggestion.name;
+    } else {
+      name = suggestion.displayName;
+    }
+    setMemberList([...memberList, {id: suggestion.id, displayName: name, image: suggestion.image}])
+    setMemberName(name);
+    setSuggestions([]); // 候補をクリックしたら候補リストをクリア
   }
 
   const removeMember = (index: number) => {
@@ -97,13 +110,13 @@ const New: NextPage = () => {
             <input
               type="text"
               className={styles.text_form} 
-              placeholder="メンバー名(フレンドコード可)"
+              placeholder="メンバー名"
               value={memberName}
               onChange={changeMemberName}
             ></input>
             <button
               className={styles.form_add_button}
-              onClick={addMemberList}
+              onClick={addMemberListFromTextBox}
             >
               追加
             </button>
@@ -112,9 +125,10 @@ const New: NextPage = () => {
             memberList.length > 0 &&
             <div className={styles.member_list}>
               {
-                memberList.map((member, index) => (
+                memberList.map((memberData, index) => (
                   <div key={index} className={styles.member_chip}>
-                    <p>{member}</p>
+                    <FriendCardImage img={memberData.image} width={24} height={24} />
+                    <p>{memberData.displayName}</p>
                     <CiCloseSm 
                       className={styles.icon}
                       onClick={() => removeMember(index)}
@@ -127,11 +141,20 @@ const New: NextPage = () => {
           {
             suggestions.length >0 &&
             <>
-              <p className={styles.suggestion_list_title}>候補</p>
+              <p className={styles.suggestion_list_title}>候補のフレンド</p>
               <div className={styles.suggestion_list}>
                 {suggestions.map((suggestion, index) => (
-                  <div key={index} className={styles.suggestion_description} onClick={() => handleSuggestionClick(suggestion)}>
-                    <p>{suggestion}</p>
+                  <div key={index} className={styles.suggestion_description}>
+                    <div className={styles.suggestion_description_right}>
+                      <FriendCardImage img={suggestion.image} />
+                      <p>{suggestion.displayName}</p>
+                    </div>
+                    <button
+                      className={styles.suggestion_description_add_button}
+                      onClick={() => addMemberListFromFriend(suggestion)}
+                    >
+                      メンバーに追加
+                    </button>
                   </div>
                 ))}
               </div>
