@@ -5,6 +5,7 @@ import { useUserStore } from "../../stores/user";
 import { useEffect, useState } from "react";
 import { getFriendshipsByUID, postFriendship } from "../../services/friendships";
 import { PostFriendshipDataType } from "../../@types/friendship";
+import FriendCardImage from "./FriendCardImage";
 
 const FriendCard: ({user}:FriendCardPropsType)=>JSX.Element = ({user}: FriendCardPropsType) => {
 
@@ -81,11 +82,7 @@ const FriendCard: ({user}:FriendCardPropsType)=>JSX.Element = ({user}: FriendCar
   return (
     <div className={styles.friend}>
       <div className={styles.left_side}>
-        <Image 
-          className={styles.user_icon}
-          src={user?.image}
-          alt="" width={42} height={42}
-        />
+        <FriendCardImage img={user?.image} />
         <div className={styles.user_name_and_code}>
           <p className={styles.user_name}>{user?.displayName}</p>
           <p className={styles.user_code}>{user?.friendCode}</p>
