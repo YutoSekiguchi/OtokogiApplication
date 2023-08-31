@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS pays (
   mid INT NOT NULL,
   uid INT NOT NULL,
   price INT NOT NULL,
+  drive_not_beer INT NOT NULL,
   drive_beer INT NOT NULL,
   detail TEXT,
   date TEXT NOT NULL,
