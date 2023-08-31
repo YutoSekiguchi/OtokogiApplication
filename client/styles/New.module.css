@@ -67,11 +67,23 @@
   padding: 0 1rem;
   border-bottom: 1px solid var(--c-gray-border);
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.suggestion_description p {
-  
+.suggestion_description_right {
+  display: flex;
+  align-items: center;
 }
-
+.suggestion_description_right p {
+  margin-left: 1rem;
+}
+.suggestion_description_add_button {
+  border: 1px solid var(--c-primary);
+  border-radius: var(--rounded-xl);
+  background: var(--c-gray-bg-lighter);
+  color: var(--c-primary);
+  padding: 0.5rem 1rem;
+}
 .member_list {
   display: flex;
   flex-wrap: wrap;
@@ -91,7 +103,7 @@
 }
 
 .member_chip p {
-  margin: 0px
+  margin: 0px 0px 0px 0.5rem;
 }
 .member_chip .icon {
   color: #aaa;
