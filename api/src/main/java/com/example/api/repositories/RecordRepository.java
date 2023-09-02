@@ -7,5 +7,5 @@ import com.example.api.models.RecordModel;
 
 @Repository
 public interface RecordRepository extends JpaRepository<RecordModel, Long> {
-	
+	RecordModel findByUrlCode(String urlCode);
 }

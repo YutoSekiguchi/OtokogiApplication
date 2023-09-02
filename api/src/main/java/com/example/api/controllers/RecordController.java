@@ -42,6 +42,13 @@ public class RecordController {
 		}
 	}
 	
+	// url_codeから取得
+	@GetMapping("/get/urlcode/{urlcode}")
+	public ResponseEntity<RecordModel> getRecordByUrlCode(@PathVariable String urlcode) {
+		RecordModel gettedRecord = recordRepository.findByUrlCode(urlcode);
+		return ResponseEntity.ok(gettedRecord);
+	}
+	
 	// 追加
 	@Transactional
 	@PostMapping("")
