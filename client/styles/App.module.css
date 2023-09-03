@@ -48,7 +48,7 @@
 }
 .dropdown_item_box {
   padding: 5px 0px;
-  margin: 5px 0px;
+  margin: 0px 0px;
   border-bottom: 1px solid #eee;
 }
 .dropdown_item_box_last {
@@ -59,7 +59,8 @@
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 3px 13px;
+  padding: 6px 13px;
+  margin: 2px 0;
   font-size: 15px;
   font-weight: 400;
   line-height: 1.4;
@@ -67,6 +68,10 @@
 }
 .dropdown_item_text {
   margin: 0px;
+}
+.dropdown_item:hover {
+  cursor: pointer;
+  background: var(--c-gray-border);
 }
 .dropdown_item_icon {
   color: #aaa;
