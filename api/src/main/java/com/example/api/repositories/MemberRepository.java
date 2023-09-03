@@ -1,5 +1,7 @@
 package com.example.api.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -7,5 +9,6 @@ import com.example.api.models.Member;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
-	Member findByUid(Long uid);
+	List<Member> findByUid(Long uid);
+	List<Member> findByRid(Long rid);
 }

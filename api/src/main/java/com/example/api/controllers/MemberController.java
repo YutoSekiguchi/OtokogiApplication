@@ -1,5 +1,6 @@
 package com.example.api.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,12 @@ public class MemberController {
 		}
 	}
 	
-	
+	// ridからmemberの取得
+	@GetMapping("/get/rid/{rid}")
+	public ResponseEntity<List<Member>> getMembersByRid(@PathVariable Long rid) {
+		List<Member> joinedMembers = memberRepository.findByRid(rid);
+		return ResponseEntity.ok(joinedMembers);
+	}
 	
 	// 追加
 	@Transactional
