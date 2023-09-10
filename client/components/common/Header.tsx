@@ -73,7 +73,6 @@ const Header: NextPage = () => {
                 <EpAvatar className={styles.dropdown_item_icon} />
                 <p className={`${styles.dropdown_item_text}`}>フレンド一覧</p>
               </div>
-              <hr />
               <div className={styles.dropdown_item} onClick={() => {router.push("/friend/new")}}>
                 <SubwayAdmin1 className={styles.dropdown_item_icon} />
                 <p className={`${styles.dropdown_item_text}`}>フレンド追加</p>
