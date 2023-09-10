@@ -4,6 +4,7 @@ import { RecordDataType } from "../@types/record";
 interface RecordStoreType {
   record: RecordDataType | {};
   setRecordData: (data: RecordDataType) => void;
+  resetRecordData: () => void;
 }
 
 export const useRecordStore = create<RecordStoreType>((set) => ({

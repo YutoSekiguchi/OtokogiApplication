@@ -6,15 +6,22 @@ import { useState, useEffect } from 'react';
 import { generateSuggestions } from '../modules/generateSuggestion';
 import { CiCloseSm } from '../components/common/icons/CiCloseSm';
 import { postRecord } from '../services/record';
-import { PostRecordDataType } from '../@types/record';
+import { PostRecordDataType, RecordDataType } from '../@types/record';
 import { getToday } from '../modules/getToday';
 import { useRecordStore } from '../stores/record';
 import { UserDataType, memberNameAndIDType } from '../@types/user';
 import { useUserStore } from '../stores/user';
 import { getFriendshipsByUID } from '../services/friendships';
 import FriendCardImage from "../components/friend/FriendCardImage";
+import { getRecordCode } from '../modules/getRecordCode';
+import { postMember } from '../services/member';
+import { PostMemberDataType } from '../@types/member';
+import { useMemberStore } from '../stores/member';
+import { useRouter } from 'next/router';
 
 const New: NextPage = () => {
+
+  const router = useRouter();
 
   const myUser = useUserStore((state) => state.user);
   const [groupName, setGroupName] = useState<string>('');
@@ -24,6 +31,7 @@ const New: NextPage = () => {
   const [myFriendList, setMyFriendList] = useState<UserDataType[]>([]);
 
   const setRecordData = useRecordStore((state) => state.setRecordData);
+  const addMembers = useMemberStore((state) => state.addMembers);
 
   useEffect(() => {
     const getMyFriend = async() => {
@@ -46,7 +54,7 @@ const New: NextPage = () => {
     if (e.target.value === "") {
       return
     }
-    const newSuggestions = generateSuggestions(e.target.value, myFriendList);
+    const newSuggestions = generateSuggestions(e.target.value, myFriendList, memberList);
     setSuggestions(newSuggestions);
   }
 
@@ -77,13 +85,51 @@ const New: NextPage = () => {
   }
 
   const submit = async() => {
-    const recordData: PostRecordDataType = {
-      title: groupName,
-      date: getToday(),
-      totalPrice: 0,
+    if (groupName !== "" && memberList.length > 0) {
+      const date = getToday();
+      const urlCode = getRecordCode();
+      const recordData: PostRecordDataType = {
+        title: groupName,
+        date: date,
+        totalPrice: 0,
+        urlCode: urlCode,
+      }
+      const record: RecordDataType = await postRecord(recordData);
+      setRecordData(record);
+      if (record !== null && myUser !== null) {
+        const myData: PostMemberDataType = {
+          uid: myUser.id,
+          name: myUser.displayName !== null? myUser.displayName!: myUser.name,
+          rid: record.id,
+          ranking: 1,
+          totalWin: 0,
+          totalDrive: 0,
+          totalPrice: 0,
+        }
+        const me = await postMember(myData);
+        addMembers(me);
+        for(let i=0; i<memberList.length; i++) {
+          const memberData: PostMemberDataType = {
+            uid: (memberList[i].id===null)? 0: memberList[i].id!,
+            name: memberList[i].displayName,
+            rid: record.id,
+            ranking: 1,
+            totalPrice: 0,
+            totalWin: 0,
+            totalDrive: 0,
+          }
+          const member = await postMember(memberData);
+          addMembers(member);
+        }
+        router.push(`/record/${urlCode}`);
+      } else {
+        alert("グループ作成に失敗しました");
+        return;
+      }
+    } else {
+      alert("グループ名とメンバーを埋めてください");
+      return;
     }
-    const record = await postRecord(recordData);
-    setRecordData(record);
   }
 
   return (
