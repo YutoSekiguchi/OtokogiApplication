@@ -32,6 +32,31 @@
   background: var(--c-primary-darker);
 }
 
+.recently_group_list {
+  width: 100%;
+}
+.recently_group_title {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bolder;
+}
+.recently_group_element {
+  width: 80%;
+  padding: 0.75rem;
+  border: 2px solid var(--c-gray-border);
+  border-radius: var(--rounded-sm);
+  margin: 0 auto;
+}
+.recently_group_element > h2 {
+  font-size: 1rem;
+  margin: 2px 0 0 0;
+}
+.recently_group_element > p {
+  font-size: 0.8rem;
+  margin: 0 0 2px 0;
+  color: var(--c-gray-text);
+}
+
 .grid {
   display: flex;
   align-items: center;
