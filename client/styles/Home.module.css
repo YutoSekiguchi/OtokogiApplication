@@ -18,8 +18,8 @@
 
 .start_button {
   margin-top: 1rem;
-  width: 80%;
-  max-width: 400px;
+  width: 90%;
+  max-width: 540px;
   height: 52px;
   color: white;
   font-weight: 600;
@@ -34,6 +34,7 @@
 
 .recently_group_list {
   width: 100%;
+  margin-top: 1.4rem;
 }
 .recently_group_title {
   text-align: center;
@@ -41,11 +42,13 @@
   font-weight: bolder;
 }
 .recently_group_element {
-  width: 80%;
+  width: 90%;
+  max-width: 540px;
   padding: 0.75rem;
   border: 2px solid var(--c-gray-border);
   border-radius: var(--rounded-sm);
   margin: 0 auto;
+  cursor: pointer;
 }
 .recently_group_element > h2 {
   font-size: 1rem;

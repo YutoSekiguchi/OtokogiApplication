@@ -6,15 +6,29 @@ import { signIn } from 'next-auth/react'
 import styles from '../styles/Home.module.css'
 import { useUserStore } from '../stores/user'
 import { useRouter } from "next/router";
+import { useEffect, useState } from 'react'
+import { getRecordsByUID } from '../services/record'
+import { RecordDataType } from '../@types/record'
 
 const Home: NextPage = () => {
 
   const user = useUserStore((state) => state.user);
 
   const router = useRouter();
+  const [recordData, setRecordData] = useState<RecordDataType[]>([]);
   const moveNewPage = () => {
     router.push("/new");
   }
+
+  useEffect(() => {
+    const getRecordData = async() => {
+      if (user !== null) {
+        const res = await getRecordsByUID(user.id);
+        setRecordData(res);
+      }
+    }
+    getRecordData();
+  }, [user])
 
   return (
     <div className="container">
@@ -43,9 +57,26 @@ const Home: NextPage = () => {
             ログイン
           </button>
           :
-          <button className={styles.start_button} onClick={moveNewPage}>
-            はじめる
-          </button>
+          <>
+            <button className={styles.start_button} onClick={moveNewPage}>
+              はじめる
+            </button>
+            <div className={styles.recently_group_list}>
+              <h2 className={styles.recently_group_title}>最近のグループ</h2>
+              {
+                recordData.map((record, index) => (
+                  <div
+                    key={index}
+                    className={styles.recently_group_element}
+                    onClick={() => router.push(`/record/${record.urlCode}`)}
+                  >
+                    <h2>{record.title}</h2>
+                    <p>{record.date}</p>
+                  </div>
+                ))
+              }
+            </div>
+          </>
         }
         
         <div className={styles.grid}>
