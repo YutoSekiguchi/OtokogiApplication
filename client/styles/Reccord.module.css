@@ -1,0 +1,17 @@
+.record_header {
+  background-color: var(--c-blue-bg-darker);
+  width: 100%;
+  margin: 0px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.record_header_title {
+  color: white;
+  margin: 0;
+  padding: 1rem;
+  font-size: 1.2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
