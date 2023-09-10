@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -58,6 +60,10 @@ public class Member {
 		this.totalWin = totalWin;
 		this.createdAt = LocalDateTime.now();
 	}
+	
+	@ManyToOne
+    @JoinColumn(name = "rid", referencedColumnName = "id", insertable = false, updatable = false)
+    private RecordModel record;
 	
 	// ゲッターとセッター
 	public Long getId() {
