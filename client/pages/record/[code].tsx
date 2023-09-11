@@ -7,6 +7,7 @@ import { getRecordByURLCode } from "../../services/record";
 import { getMembersByRID } from "../../services/member";
 import { MemberDataType } from "../../@types/member";
 import { RecordDataType } from "../../@types/record";
+import { EvaArrowCircleUpOutline } from "../../components/common/icons/EvaArrowCircleUpOutline";
 
 const Record: NextPage = () => {
 
@@ -61,6 +62,15 @@ const Record: NextPage = () => {
                   </div>
                 ))
               }
+            </div>
+          </div>
+
+          <div className={styles.main}>
+            <button className={styles.add_record_button}>
+              漢気記録を追加
+            </button>
+            <div className={styles.arrow_icon_wrapper}>
+              <EvaArrowCircleUpOutline className={styles.arrow_icon} />
             </div>
           </div>
         </>

@@ -27,3 +27,38 @@
   margin: 0 0.1rem 1rem 0.1rem;
   font-size: 0.8rem;
 }
+
+.main {
+  width: 90%;
+  margin: 2.5rem auto 0 auto;
+  text-align: center;
+}
+
+.add_record_button {
+  width: 100%;
+  max-width: 520px;
+  border: 1px solid var(--c-primary);
+  border-radius: var(--rounded-sm);
+  background: var(--c-gray-bg-lighter);
+  color: var(--c-primary);
+  padding: 1rem 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.arrow_icon_wrapper {
+  margin-top: 1rem;
+  animation: move-y 0.6s infinite alternate ease-in-out;
+}
+@keyframes move-y {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(6px);
+  }
+}
+.arrow_icon {
+  font-size: 1.4rem;
+  color: var(--c-gray-text);
+}
