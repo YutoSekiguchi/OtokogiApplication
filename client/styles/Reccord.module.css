@@ -15,3 +15,15 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.record_header_member_list {
+  display: flex;
+  padding-left: 1rem;
+}
+.record_header_member_list > div {
+  display: flex;
+}
+.record_header_member {
+  color: white;
+  margin: 0 0.1rem 1rem 0.1rem;
+  font-size: 0.8rem;
+}
