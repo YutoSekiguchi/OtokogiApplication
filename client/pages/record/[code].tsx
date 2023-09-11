@@ -72,6 +72,9 @@ const Record: NextPage = () => {
             <div className={styles.arrow_icon_wrapper}>
               <EvaArrowCircleUpOutline className={styles.arrow_icon} />
             </div>
+            <div>
+              <p>「漢気記録を追加」ボタンから<br />メンバー間の漢気記録を登録しましょう</p>
+            </div>
           </div>
         </>
         :
