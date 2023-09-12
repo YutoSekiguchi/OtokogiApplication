@@ -9,8 +9,8 @@
 .record_header_title {
   color: white;
   margin: 0;
-  padding: 1rem;
-  font-size: 1.2rem;
+  padding: 1rem 0 0.5rem 1rem;
+  font-size: 1.4rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -61,4 +61,44 @@
 .arrow_icon {
   font-size: 1.4rem;
   color: var(--c-gray-text);
+}
+.detail_context {
+  font-size: 0.8rem;
+}
+.copy_button {
+  font-size: 0.9rem;
+  color: var(--c-gray-text);
+  border: 1px solid #d6e3ed;
+  border-radius: var(--rounded-xl);
+  background: none;
+  width: 48%;
+  padding: 0.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+.share_text {
+  text-decoration: none;
+}
+
+.button_wrapper {
+  margin-top: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.edit_button {
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 520px;
+  border-radius: var(--rounded-sm);
+  background: var(--c-gray-border);
+  color: var(--c-gray-text);
+  padding: 1rem 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1rem;
 }

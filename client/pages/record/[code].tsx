@@ -8,6 +8,8 @@ import { getMembersByRID } from "../../services/member";
 import { MemberDataType } from "../../@types/member";
 import { RecordDataType } from "../../@types/record";
 import { EvaArrowCircleUpOutline } from "../../components/common/icons/EvaArrowCircleUpOutline";
+import CopyButton from "../../components/record/CopyButton";
+import ShareButton from "../../components/record/ShareButton";
 
 const Record: NextPage = () => {
 
@@ -15,6 +17,7 @@ const Record: NextPage = () => {
   const record = useRecordStore((state) => state.record);
   const setRecordData = useRecordStore((state) => state.setRecordData);
   const [memberData, setMemberData] = useState<MemberDataType[]>([]);
+  const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
 
   const getMemberData = async(rid: number) => {
     const res = await getMembersByRID(rid);
@@ -73,7 +76,17 @@ const Record: NextPage = () => {
               <EvaArrowCircleUpOutline className={styles.arrow_icon} />
             </div>
             <div>
-              <p>「漢気記録を追加」ボタンから<br />メンバー間の漢気記録を登録しましょう</p>
+              <p className={styles.detail_context}>「漢気記録を追加」ボタンから<br />メンバー間の漢気記録を登録しましょう</p>
+            </div>
+            <div className={styles.button_wrapper}>
+              <CopyButton textToCopy={currentUrl} />
+              <ShareButton textToShare={currentUrl} />
+            </div>
+
+            <div>
+              <button className={styles.edit_button}>
+                グループ編集
+              </button>
             </div>
           </div>
         </>
