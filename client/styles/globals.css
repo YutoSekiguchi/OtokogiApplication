@@ -43,3 +43,55 @@ a {
 .container {
   background-color: var(--c-secondary-bg);
 }
+.flex-start {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.bold-text {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.checkbox-input {
+  display: none;
+}
+
+/* カスタムチェックボックスのスタイル */
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #333; /* チェックボックスの枠線のスタイル */
+  border-radius: 4px; /* 角丸 */
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* チェックされたときのスタイル */
+.checkbox-input:checked + .custom-checkbox {
+  background-color: var(--c-primary); /* 選択時の背景色 */
+  border-color: var(--c-primary); /* 選択時の枠線の色 */
+  color: white; /* チェックマークの色 */
+}
+
+/* チェックマークのスタイル */
+.custom-checkbox::after {
+  content: '\2713'; /* チェックマークのUnicode文字 */
+  font-size: 14px;
+  display: none;
+}
+
+/* チェックされたときのチェックマークの表示 */
+.checkbox-input:checked + .custom-checkbox::after {
+  display: block;
+}
+
+/* ラベルのスタイル */
+.checkbox-label {
+  margin-left: 10px;
+}

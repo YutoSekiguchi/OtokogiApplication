@@ -102,3 +102,30 @@
   font-weight: bold;
   font-size: 1.1rem;
 }
+
+.newmain {
+  margin: 2rem 1rem 0 1rem;
+}
+.user_select_box {
+  padding: 1rem;
+  background: var(--c-gray-bg-lighter);
+  width: 60%;
+  max-width: 520px;
+  border: 2px solid var(--c-gray-border);
+  border-radius: var(--rounded-sm);
+  margin-right: 1rem;
+}
+
+.checkbox_wrapper {
+  display: flex;
+  align-items: center;
+  min-width: 50%;
+/* 
+  display: flex;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  user-select: none; */
+}
