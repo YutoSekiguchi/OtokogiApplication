@@ -96,8 +96,41 @@ const NewRecord: NextPage = () => {
             </>
           }
         </div>
+
+        <div className="flex-start">
+          <p className="bold-text">の</p>
+          <input 
+            type="text"
+            className={styles.text_form}
+            placeholder="タクシー代"
+          />
+          <p className="bold-text">を払って、</p>
+        </div>
+
+        <div className="flex-start">
+          <div className={styles.number_form_left}>¥</div>
+          <input type="number" className={styles.number_form} placeholder="4800" />
+          <p className="bold-text">かかった。</p>
+        </div>
+
+        <div>
+          <button
+            className={styles.submit_button}
+          >
+            登録
+          </button>
+        </div>
+
+        <div>
+          <button
+            className={styles.back_button}
+            onClick={() => {router.push(`/record/${router.query.code}`)}}
+          >
+            戻る
+          </button>
+        </div>
       </div>
-      </div>
+    </div>
   );
 }
 

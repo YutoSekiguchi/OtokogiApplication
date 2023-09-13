@@ -107,7 +107,8 @@
   margin: 2rem 1rem 0 1rem;
 }
 .user_select_box {
-  padding: 1rem;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
   background: var(--c-gray-bg-lighter);
   width: 60%;
   max-width: 520px;
@@ -120,12 +121,67 @@
   display: flex;
   align-items: center;
   min-width: 50%;
-/* 
+}
+
+.text_form {
+  padding: 0.8rem 1rem;
+  background: var(--c-gray-bg-lighter);
+  width: 50%;
+  font-size: 1rem;
+  max-width: 520px;
+  border: 2px solid var(--c-gray-border);
+  border-radius: var(--rounded-sm);
+  margin: 0 1rem;
+}
+.number_form_left{
+  padding: 0.8rem 1rem;
+  font-size: 1.2rem;
+  background: var(--c-gray-border);
+  border-top-left-radius: var(--rounded-sm);
+  border-bottom-left-radius: var(--rounded-sm);
+}
+.number_form {
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  background: var(--c-gray-bg-lighter);
+  width: 50%;
+  max-width: 520px;
+  border: 2px solid var(--c-gray-border);
+  border-top-right-radius: var(--rounded-sm);
+  border-bottom-right-radius: var(--rounded-sm);
+  margin-right: 1rem;
+}
+
+.submit_button {
+  background: var(--c-primary);
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: var(--rounded-sm);
+  width: 100%;
+  max-width: 640px;
   display: flex;
-  position: relative;
-  padding-left: 30px;
-  margin-bottom: 12px;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 2.5rem;
   cursor: pointer;
-  font-size: 14px;
-  user-select: none; */
+}
+
+.back_button {
+  background: var(--c-gray-border);
+  color: var(--c-gray-text);
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: var(--rounded-sm);
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  cursor: pointer;
 }
