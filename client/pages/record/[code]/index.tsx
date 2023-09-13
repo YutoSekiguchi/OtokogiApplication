@@ -69,7 +69,7 @@ const Record: NextPage = () => {
           </div>
 
           <div className={styles.main}>
-            <button className={styles.add_record_button}>
+            <button className={styles.add_record_button} onClick={() => {router.push(`/record/${router.query.code}/payment/new`)}}>
               漢気記録を追加
             </button>
             <div className={styles.arrow_icon_wrapper}>
