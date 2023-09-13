@@ -10,20 +10,22 @@ import { RecordDataType } from "../../../@types/record";
 import { EvaArrowCircleUpOutline } from "../../../components/common/icons/EvaArrowCircleUpOutline";
 import CopyButton from "../../../components/record/CopyButton";
 import ShareButton from "../../../components/record/ShareButton";
+import { useMemberStore } from "../../../stores/member";
 
 const Record: NextPage = () => {
 
   const router = useRouter();
   const record = useRecordStore((state) => state.record);
   const setRecordData = useRecordStore((state) => state.setRecordData);
-  const [memberData, setMemberData] = useState<MemberDataType[]>([]);
+  const setMembers = useMemberStore((state) => state.setMembers);
+  const members = useMemberStore((state) => state.members);
   const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
 
   const getMemberData = async(rid: number) => {
     const res = await getMembersByRID(rid);
     console.log(res);
     if (res != null) {
-      setMemberData(res);
+      setMembers(res);
     }
   }
 
@@ -56,11 +58,11 @@ const Record: NextPage = () => {
             <h1 className={styles.record_header_title}>{record.title}</h1>
             <div className={styles.record_header_member_list}>
               {
-                memberData.map((data, i) => (
+                members.map((data, i) => (
                   <div key={i}>
                     <p className={styles.record_header_member}>{data.name}</p>
                     {
-                      i != memberData.length-1 && <p className={styles.record_header_member}>・</p>
+                      i != members.length-1 && <p className={styles.record_header_member}>・</p>
                     }
                   </div>
                 ))

@@ -7,12 +7,14 @@ import { getMembersByRID } from "../../../../services/member";
 import { RecordDataType } from "../../../../@types/record";
 import { getRecordByURLCode } from "../../../../services/record";
 import styles from "../../../../styles/Reccord.module.css"
+import { useMemberStore } from "../../../../stores/member";
 
 const NewRecord: NextPage = () => {
   const router = useRouter();
   const record = useRecordStore((state) => state.record);
   const setRecordData = useRecordStore((state) => state.setRecordData);
-  const [memberData, setMemberData] = useState<MemberDataType[]>([]);
+  const setMembers = useMemberStore((state) => state.setMembers);
+  const members = useMemberStore((state) => state.members);
   const [isCheckedList, setIsCheckedList] = useState<boolean[]>([]);
   
 
@@ -20,7 +22,7 @@ const NewRecord: NextPage = () => {
     const res = await getMembersByRID(rid);
     console.log(res);
     if (res != null) {
-      setMemberData(res);
+      setMembers(res);
     }
   }
 
@@ -55,11 +57,11 @@ const NewRecord: NextPage = () => {
   }, [router])
 
   useEffect(() => {
-    if(memberData.length > 0) {
-      const tmp = new Array(memberData.length).fill(true);
+    if(members.length > 0) {
+      const tmp = new Array(members.length).fill(true);
       setIsCheckedList(tmp);
     }
-  }, [memberData])
+  }, [members])
 
   return (
     <div className="container">
@@ -67,7 +69,7 @@ const NewRecord: NextPage = () => {
         <div className="flex-start">
           <select name="paid-user" className={styles.user_select_box}>
             {
-              memberData.map((member, i) => (
+              members.map((member, i) => (
                 <option key={i} value={member.name}>{member.name}</option>
               ))
             }
@@ -80,7 +82,7 @@ const NewRecord: NextPage = () => {
             isCheckedList.length > 0 &&
             <>
             {
-              memberData.map((member, i) => (
+              members.map((member, i) => (
                 <div key={i} className={styles.checkbox_wrapper}>
                   <input
                     type="checkbox" 
