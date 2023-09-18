@@ -29,6 +29,7 @@ const New: NextPage = () => {
   const [memberList, setMemberList] = useState<memberNameAndIDType[]>([]);
   const [suggestions, setSuggestions] = useState<UserDataType[]>([]);
   const [myFriendList, setMyFriendList] = useState<UserDataType[]>([]);
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
 
   const setRecordData = useRecordStore((state) => state.setRecordData);
   const addMembers = useMemberStore((state) => state.addMembers);
@@ -85,50 +86,56 @@ const New: NextPage = () => {
   }
 
   const submit = async() => {
-    if (groupName !== "" && memberList.length > 0) {
-      const date = getToday();
-      const urlCode = getRecordCode();
-      const recordData: PostRecordDataType = {
-        title: groupName,
-        date: date,
-        totalPrice: 0,
-        urlCode: urlCode,
-      }
-      const record: RecordDataType = await postRecord(recordData);
-      setRecordData(record);
-      if (record !== null && myUser !== null) {
-        const myData: PostMemberDataType = {
-          uid: myUser.id,
-          name: myUser.displayName !== null? myUser.displayName!: myUser.name,
-          rid: record.id,
-          ranking: 1,
-          totalWin: 0,
-          totalDrive: 0,
+    if (!isButtonDisabled) {
+      setIsButtonDisabled(true);
+      if (groupName !== "" && memberList.length > 0) {
+        const date = getToday();
+        const urlCode = getRecordCode();
+        const recordData: PostRecordDataType = {
+          title: groupName,
+          date: date,
           totalPrice: 0,
+          urlCode: urlCode,
         }
-        const me = await postMember(myData);
-        addMembers(me);
-        for(let i=0; i<memberList.length; i++) {
-          const memberData: PostMemberDataType = {
-            uid: (memberList[i].id===null)? 0: memberList[i].id!,
-            name: memberList[i].displayName,
+        const record: RecordDataType = await postRecord(recordData);
+        setRecordData(record);
+        if (record !== null && myUser !== null) {
+          const myData: PostMemberDataType = {
+            uid: myUser.id,
+            name: myUser.displayName !== null? myUser.displayName!: myUser.name,
             rid: record.id,
             ranking: 1,
-            totalPrice: 0,
             totalWin: 0,
             totalDrive: 0,
+            totalPrice: 0,
           }
-          const member = await postMember(memberData);
-          addMembers(member);
+          const me = await postMember(myData);
+          addMembers(me);
+          for(let i=0; i<memberList.length; i++) {
+            const memberData: PostMemberDataType = {
+              uid: (memberList[i].id===null)? 0: memberList[i].id!,
+              name: memberList[i].displayName,
+              rid: record.id,
+              ranking: 1,
+              totalPrice: 0,
+              totalWin: 0,
+              totalDrive: 0,
+            }
+            const member = await postMember(memberData);
+            addMembers(member);
+          }
+          router.push(`/record/${urlCode}`);
+        } else {
+          alert("グループ作成に失敗しました");
+          return;
         }
-        router.push(`/record/${urlCode}`);
       } else {
-        alert("グループ作成に失敗しました");
+        alert("グループ名とメンバーを埋めてください");
         return;
       }
-    } else {
-      alert("グループ名とメンバーを埋めてください");
-      return;
+      setTimeout(() => {
+        setIsButtonDisabled(false);
+      }, 2000)
     }
   }
 
@@ -210,6 +217,7 @@ const New: NextPage = () => {
           <button
             className={styles.submit_button}
             onClick={submit}
+            disabled={isButtonDisabled}
           >
             グループ作成
           </button>
