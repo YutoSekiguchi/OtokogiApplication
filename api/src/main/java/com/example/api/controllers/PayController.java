@@ -49,6 +49,13 @@ public class PayController {
 		return ResponseEntity.ok(gettedPays);
 	}
 	
+	// ridからpay取得
+	@GetMapping("get/{rid}/rid")
+	public ResponseEntity<List<Pay>> getPaysByRid(@PathVariable Long rid) {
+		List<Pay> gettedPays = payRepository.findByRid(rid);
+		return ResponseEntity.ok(gettedPays);
+	}
+	
 	// 追加
 	@PostMapping("")
 	public ResponseEntity<Pay> postPay(@RequestBody Pay pay) {
