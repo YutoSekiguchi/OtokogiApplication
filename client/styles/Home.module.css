@@ -47,7 +47,7 @@
   padding: 0.75rem;
   border: 2px solid var(--c-gray-border);
   border-radius: var(--rounded-sm);
-  margin: 0 auto;
+  margin: 0.75rem auto;
   cursor: pointer;
 }
 .recently_group_element > h2 {
