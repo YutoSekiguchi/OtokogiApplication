@@ -9,10 +9,14 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from 'react'
 import { getRecordsByUID } from '../services/record'
 import { RecordDataType } from '../@types/record'
+import { useMemberStore } from '../stores/member'
+import { useRecordStore } from '../stores/record'
 
 const Home: NextPage = () => {
 
   const user = useUserStore((state) => state.user);
+  const resetMembers = useMemberStore((state) => state.resetMembers);
+  const resetRecordData = useRecordStore((state) => state.resetRecordData)
 
   const router = useRouter();
   const [recordData, setRecordData] = useState<RecordDataType[]>([]);
@@ -20,7 +24,13 @@ const Home: NextPage = () => {
     router.push("/new");
   }
 
+  const resetData = () => {
+    resetRecordData();
+    resetMembers();
+  }
+
   useEffect(() => {
+    resetData();
     const getRecordData = async() => {
       if (user !== null) {
         const res = await getRecordsByUID(user.id);
