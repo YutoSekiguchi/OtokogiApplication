@@ -4,6 +4,16 @@ import { returnData } from "./common";
 
 const PAY_API_URL = `${process.env.API_URL}/pays`;
 
+export const getPayByID = async(id: number) => {
+  const url = `${PAY_API_URL}/get/${id}`;
+  try {
+    const res = await axios.get(url);
+    return returnData(res);
+  } catch(error) {
+    throw(error);
+  }
+}
+
 export const getPaysByRID = async(rid: number) => {
   const url = `${PAY_API_URL}/get/${rid}/rid`;
   try {
