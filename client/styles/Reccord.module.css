@@ -185,3 +185,40 @@
   margin-top: 1.5rem;
   cursor: pointer;
 }
+
+.pay_list {
+
+}
+
+.pay_el {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--c-gray-border);
+}
+
+.pay_el_left { 
+  justify-content: start;
+}
+.pay_el_right {
+  display: flex;
+  align-items: center;
+}
+
+.pay_detail {
+  font-size: 1rem;
+  margin-bottom: 0;
+  text-align: start;
+}
+
+.pay_name_day {
+  margin-top: 0.2rem;
+  font-size: 0.7rem;
+  color: var(--c-gray-text); 
+}
+
+.pay_edit_button {
+  margin-left: 1rem;
+  background: var(--c-secondary-bg);
+  cursor: pointer;
+}
