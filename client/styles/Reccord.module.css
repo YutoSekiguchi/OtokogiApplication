@@ -222,3 +222,6 @@
   background: var(--c-secondary-bg);
   cursor: pointer;
 }
+.pay_edit_icon:hover {
+  color: var(--c-gray-text);
+}
