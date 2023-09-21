@@ -82,4 +82,20 @@ public class RecordModel {
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
+	
+	// 一括更新用のセッター
+	public void updateFrom(RecordModel updateRecord) {
+		if (updateRecord.getTitle() != null) {
+			this.setTitle(updateRecord.getTitle());
+		}
+		if (updateRecord.getDate() != null) {
+			this.setDate(updateRecord.getDate());
+		}
+		if (updateRecord.getTotalPrice() != null) {
+			this.setTotalPrice(updateRecord.getTotalPrice());
+		}
+		if (updateRecord.getUrlCode() != null) {
+			this.setUrlCode(updateRecord.getUrlCode());
+		}
+	}
 }

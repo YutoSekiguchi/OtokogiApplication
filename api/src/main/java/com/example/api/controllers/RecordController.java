@@ -81,4 +81,18 @@ public class RecordController {
 		}
 	}
 	
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<RecordModel> updateRecordById(@PathVariable Long id, @RequestBody RecordModel updatedRecord) {
+		Optional<RecordModel> recordOptional = recordRepository.findById(id);
+		
+		if (recordOptional.isPresent()) {
+			RecordModel rec = recordOptional.get();
+			rec.updateFrom(updatedRecord);
+			RecordModel savedRecord = recordRepository.save(rec);
+		    return ResponseEntity.ok(savedRecord);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
 }
