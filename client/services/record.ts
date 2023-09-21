@@ -33,3 +33,13 @@ export const getRecordsByUID = async(uid: number) => {
     throw(error);
   }
 }
+
+export const updateRecordByID = async (id: number, data: PostRecordDataType) => {
+  const url = `${RECORD_API_URL}/${id}`;
+  try {
+    const res = await axios.put(url, data);
+    return returnData(res);
+  } catch (error) {
+    throw(error);
+  }
+}
