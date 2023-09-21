@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useRecordStore } from "../../../../../stores/record";
 import { useMemberStore } from "../../../../../stores/member";
 import { useState } from "react";
-import Form from "../../../../../components/record/Form";
+import PayEditForm from "../../../../../components/record/PayEditForm";
 
 const PayEditPage: NextPage = () => {
   const router = useRouter();
@@ -21,7 +21,7 @@ const PayEditPage: NextPage = () => {
 
   return (
     <div className="container">
-      <Form mode="edit" />
+      <PayEditForm mode="edit" />
     </div>
   );
 }

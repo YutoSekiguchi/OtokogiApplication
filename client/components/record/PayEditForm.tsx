@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useRecordStore } from "../../stores/record";
-import { MemberDataType } from "../../@types/member";
 import { ChangeEvent, useEffect, useState } from "react";
 import { getMembersByRID } from "../../services/member";
 import { RecordDataType } from "../../@types/record";
@@ -16,7 +15,7 @@ interface Props {
   mode?: "edit" | "submit"
 }
 
-const Form = ({mode="submit"}: Props): JSX.Element => {
+const PayEditForm = ({mode="submit"}: Props): JSX.Element => {
   const router = useRouter();
   const record = useRecordStore((state) => state.record);
   const setRecordData = useRecordStore((state) => state.setRecordData);
@@ -392,4 +391,4 @@ const Form = ({mode="submit"}: Props): JSX.Element => {
   );
 }
 
-export default Form;
+export default PayEditForm;

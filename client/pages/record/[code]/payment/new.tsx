@@ -10,13 +10,13 @@ import { useMemberStore } from "../../../../stores/member";
 import { PostPayDataType } from "../../../../@types/pay";
 import { getToday } from "../../../../modules/getToday";
 import { postPay } from "../../../../services/pay";
-import Form from "../../../../components/record/Form";
+import PayEditForm from "../../../../components/record/PayEditForm";
 
 const NewRecord: NextPage = () => {
 
   return (
     <div className="container">
-      <Form />
+      <PayEditForm />
     </div>
   );
 }
