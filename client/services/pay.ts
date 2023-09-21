@@ -32,3 +32,13 @@ export const postPay = async(data: PostPayDataType) => {
     throw(error);
   }
 }
+
+export const updatePayByID = async(id: number, data: PostPayDataType) => {
+  const url = `${PAY_API_URL}/${id}`;
+  try {
+    const res = await axios.put(url, data);
+    return returnData(res);
+  } catch(error) {
+    throw(error);
+  }
+}
