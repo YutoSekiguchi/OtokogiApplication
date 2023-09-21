@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,5 +62,20 @@ public class PayController {
 	public ResponseEntity<Pay> postPay(@RequestBody Pay pay) {
 		Pay joinedPay = payRepository.save(pay);
 		return ResponseEntity.ok(joinedPay);
+	}
+	
+	// 更新
+	@PutMapping("/{id}")
+	public ResponseEntity<Pay> updatePayId(@PathVariable Long id, @RequestBody Pay updatedPay) {
+		Optional<Pay> payOptional = payRepository.findById(id);
+		
+		if (payOptional.isPresent()) {
+			Pay pay = payOptional.get();
+			pay.updateFrom(updatedPay);
+			Pay savedPay = payRepository.save(pay);
+		    return ResponseEntity.ok(savedPay);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 }

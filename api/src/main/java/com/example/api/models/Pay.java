@@ -148,4 +148,35 @@ public class Pay {
 		return createdAt;
 	}
 	
+	// 一括更新用のセッターメソッド
+    public void updateFrom(Pay updatedPay) {
+        if (updatedPay.getRid() != null) {
+            this.setRid(updatedPay.getRid());
+        }
+        if (updatedPay.getMid() != null) {
+            this.setMid(updatedPay.getMid());
+        }
+        if (updatedPay.getUid() != null) {
+            this.setUid(updatedPay.getUid());
+        }
+        if (updatedPay.getOtherUids() != null) {
+            this.setOtherUids(updatedPay.getOtherUids());
+        }
+        if (updatedPay.getPrice() != null) {
+            this.setPrice(updatedPay.getPrice());
+        }
+        if (updatedPay.getDrive() != null) {
+            this.setDrive(updatedPay.getDrive());
+        }
+        if (updatedPay.getDriveBeer() != null) {
+            this.setDriveBeer(updatedPay.getDriveBeer());
+        }
+        if (updatedPay.getDetail() != null) {
+            this.setDetail(updatedPay.getDetail());
+        }
+        if (updatedPay.getDate() != null) {
+            this.setDate(updatedPay.getDate());
+        }
+    }
+	
 }
