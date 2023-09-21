@@ -67,8 +67,12 @@ const Record: NextPage = () => {
     return memberName;
   }
 
-  const moveEditPage = (pid: number) => {
+  const movePayEditPage = (pid: number) => {
     router.push(`/record/${router.query.code}/payment/${pid}/edit`);
+  }
+
+  const moveRecordEditPage = () => {
+    router.push(`/record/${router.query.code}/edit`)
   }
 
   useEffect(() => {
@@ -114,7 +118,7 @@ const Record: NextPage = () => {
                         </div>
                         <div className={styles.pay_el_right}>
                           <p className={styles.pay_money}>{pay.price !== 0? `¥${pay.price}` : ""}</p>
-                          <button className={styles.pay_edit_button} onClick={() => moveEditPage(pay.id)}>
+                          <button className={styles.pay_edit_button} onClick={() => movePayEditPage(pay.id)}>
                             <EntypoEdit className={styles.pay_edit_icon} />
                           </button>
                         </div>
@@ -139,7 +143,10 @@ const Record: NextPage = () => {
             </div>
 
             <div>
-              <button className={styles.edit_button}>
+              <button
+                className={styles.edit_button}
+                onClick={moveRecordEditPage}
+              >
                 グループ編集
               </button>
             </div>
