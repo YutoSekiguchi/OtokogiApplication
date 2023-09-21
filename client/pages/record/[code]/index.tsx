@@ -115,7 +115,7 @@ const Record: NextPage = () => {
                         <div className={styles.pay_el_right}>
                           <p className={styles.pay_money}>{pay.price !== 0? `¥${pay.price}` : ""}</p>
                           <button className={styles.pay_edit_button} onClick={() => moveEditPage(pay.id)}>
-                            <EntypoEdit />
+                            <EntypoEdit className={styles.pay_edit_icon} />
                           </button>
                         </div>
                       </div>

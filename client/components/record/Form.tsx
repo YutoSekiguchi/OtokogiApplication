@@ -1,4 +1,3 @@
-import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useRecordStore } from "../../stores/record";
 import { MemberDataType } from "../../@types/member";
@@ -8,16 +7,22 @@ import { RecordDataType } from "../../@types/record";
 import { getRecordByURLCode } from "../../services/record";
 import styles from "../../styles/Reccord.module.css"
 import { useMemberStore } from "../../stores/member";
-import { PostPayDataType } from "../../@types/pay";
+import { PayDataType, PostPayDataType } from "../../@types/pay";
 import { getToday } from "../../modules/getToday";
-import { postPay } from "../../services/pay";
+import { getPayByID, postPay, updatePayByID } from "../../services/pay";
+import { stringToNumberArray } from "../../modules/stringToNumberArray";
 
-const Form: NextPage = () => {
+interface Props {
+  mode?: "edit" | "submit"
+}
+
+const Form = ({mode="submit"}: Props): JSX.Element => {
   const router = useRouter();
   const record = useRecordStore((state) => state.record);
   const setRecordData = useRecordStore((state) => state.setRecordData);
   const setMembers = useMemberStore((state) => state.setMembers);
   const members = useMemberStore((state) => state.members);
+  const [payData, setPayData] = useState<PayDataType | null>(null);
   const [paidUserId, setPaidUserId] = useState<number>(0);
   const [paidMemberId, setPaidMemberId] = useState<number>(0);
   const [isCheckedList, setIsCheckedList] = useState<boolean[]>([]);
@@ -34,14 +39,24 @@ const Form: NextPage = () => {
     }
   }
 
+  const getPayData = async(id: number) => {
+    const res = await getPayByID(id);
+    if (res !== null) {
+      setPayData(res);
+    }
+  }
+
   const getFirstData = async() => {
-    if (record === null) {
-      const { code } = router.query;
+    if (record === null || mode==="edit") {
+      const { code, id } = router.query;
       if (typeof code === "string" ) {
         const res: RecordDataType = await getRecordByURLCode(code);
         if (res != null) {
           setRecordData(res);
           await getMemberData(res.id);
+          if (mode === "edit") {
+            await getPayData(Number(id));
+          }
         }
       }
     }
@@ -72,7 +87,6 @@ const Form: NextPage = () => {
   }
   
   const changePaidMoney = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(paidMoney);
     setPaidMoney(Number(e.target.value));
   }
 
@@ -126,45 +140,92 @@ const Form: NextPage = () => {
         alert("1円以上の値を入力してください。");
         return;
       }
-      
-      const data: PostPayDataType = {
-        rid: record.id,
-        mid: paidMemberId,
-        uid: paidUserId,
-        otherUids: otherUids.join(','),
-        price: paidMoney,
-        drive: 0,
-        driveBeer: 0,
-        detail: paidEventName,
-        date: getToday(),
+      if (mode === "submit") {
+        const data: PostPayDataType = {
+          rid: record.id,
+          mid: paidMemberId,
+          uid: paidUserId,
+          otherUids: otherUids.join(','),
+          price: paidMoney,
+          drive: 0,
+          driveBeer: 0,
+          detail: paidEventName,
+          date: getToday(),
+        }
+        await postPay(data);
+      } else if (mode === "edit") {
+        const updateId = Number(router.query.id);
+        const data: PostPayDataType = {
+          rid: record.id,
+          mid: paidMemberId,
+          uid: paidUserId,
+          otherUids: otherUids.join(","),
+          price: paidMoney,
+          drive: 0,
+          driveBeer: 0,
+          detail: paidEventName,
+          date: payData?.date!,
+        }
+        await updatePayByID(updateId, data);
       }
-      await postPay(data);
     } else if (isCheckDrive && !isCheckDriveBeer) {
-      const data: PostPayDataType = {
-        rid: record.id,
-        mid: paidMemberId,
-        uid: paidUserId,
-        otherUids: otherUids.join(','),
-        price: 0,
-        drive: 1,
-        driveBeer: 0,
-        detail: "運転",
-        date: getToday(),
+      if (mode === "submit") {
+        const data: PostPayDataType = {
+          rid: record.id,
+          mid: paidMemberId,
+          uid: paidUserId,
+          otherUids: otherUids.join(','),
+          price: 0,
+          drive: 1,
+          driveBeer: 0,
+          detail: "運転",
+          date: getToday(),
+        }
+        await postPay(data);
+      } else if (mode === "edit") {
+        const updateId = Number(router.query.id);
+        const data: PostPayDataType = {
+          rid: record.id,
+          mid: paidMemberId,
+          uid: paidUserId,
+          otherUids: otherUids.join(","),
+          price: 0,
+          drive: 1,
+          driveBeer: 0,
+          detail: "運転",
+          date: payData?.date!,
+        }
+        await updatePayByID(updateId, data);
       }
-      await postPay(data);
     } else if (!isCheckDrive && isCheckDriveBeer) {
-      const data: PostPayDataType = {
-        rid: record.id,
-        mid: paidMemberId,
-        uid: paidUserId,
-        otherUids: otherUids.join(','),
-        price: 0,
-        drive: 0,
-        driveBeer: 1,
-        detail: "運転&酒封印",
-        date: getToday(),
+      if (mode === "submit") {
+        const data: PostPayDataType = {
+          rid: record.id,
+          mid: paidMemberId,
+          uid: paidUserId,
+          otherUids: otherUids.join(','),
+          price: 0,
+          drive: 0,
+          driveBeer: 1,
+          detail: "運転&酒封印",
+          date: getToday(),
+        }
+        await postPay(data);
+      } else if (mode === "edit") {
+        const updateId = Number(router.query.id);
+        const data: PostPayDataType = {
+          rid: record.id,
+          mid: paidMemberId,
+          uid: paidUserId,
+          otherUids: otherUids.join(","),
+          price: 0,
+          drive: 0,
+          driveBeer: 1,
+          detail: "運転&酒封印",
+          date: payData?.date!,
+        }
+        await updatePayByID(updateId, data);
       }
-      await postPay(data);
     }
 
     router.push(`/record/${router.query.code}`);
@@ -176,12 +237,39 @@ const Form: NextPage = () => {
 
   useEffect(() => {
     if(members.length > 0) {
-      const tmp = new Array(members.length).fill(true);
-      setIsCheckedList(tmp);
-      setPaidUserId(members[0].uid)
-      setPaidMemberId(members[0].id)
+      if (mode === "submit") {
+        const tmp = new Array(members.length).fill(true);
+        setIsCheckedList(tmp);
+        setPaidUserId(members[0].uid)
+        setPaidMemberId(members[0].id)
+      }
     }
   }, [members])
+
+  useEffect(() => {
+    if(payData !== null && mode === "edit") {
+      const uids = stringToNumberArray(payData.otherUids)
+      let tmp: boolean[] = [];
+      members.map((member, _) => {
+        if(uids.includes(member.id)) {
+          tmp.push(true);
+        } else {
+          tmp.push(false);
+        }
+      })
+      setIsCheckedList(tmp);
+      setPaidUserId(payData.uid)
+      setPaidMemberId(payData.mid);
+      if (payData.drive === 1) {
+        setIsCheckDrive(true);
+      } else if (payData.driveBeer === 1) {
+        setIsCheckDriveBeer(true);
+      } else {
+        setPaidEventName(payData.detail);
+        setPaidMoney(payData.price)
+      }
+    }
+  }, [payData])
 
   return (
     <div className={styles.newmain}>
