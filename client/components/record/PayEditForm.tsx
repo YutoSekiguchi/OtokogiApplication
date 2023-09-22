@@ -104,7 +104,7 @@ const PayEditForm = ({mode="submit"}: Props): JSX.Element => {
   }
   
   const submit = async() => {
-    if ((paidUserId == null || paidUserId == 0) || (paidMemberId == null || paidMemberId == 0)) {
+    if ((paidUserId == null) || (paidMemberId == null || paidMemberId == 0)) {
       alert("エラーが発生しました。誰が支払ったのか再入力してください。");
       return;
     }
