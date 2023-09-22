@@ -34,7 +34,7 @@
   text-align: center;
 }
 
-.add_record_button {
+.add_record_button, .detail_result_button {
   width: 100%;
   max-width: 520px;
   border: 1px solid var(--c-primary);
@@ -45,6 +45,9 @@
   cursor: pointer;
   font-weight: bold;
   font-size: 1.1rem;
+}
+.detail_result_button {
+  margin-top: 2rem;
 }
 .arrow_icon_wrapper {
   margin-top: 1rem;
@@ -194,6 +197,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  max-width: 640px;
+  margin: 0 auto;
   border-bottom: 2px solid var(--c-gray-border);
 }
 

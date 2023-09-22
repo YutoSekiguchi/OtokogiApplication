@@ -138,6 +138,15 @@ const Record: NextPage = () => {
                 </div>
               </>
             }
+
+            <div>
+              <button
+                className={styles.detail_result_button}
+              >
+                詳細結果を見る
+              </button>
+            </div>
+
             <div className={styles.button_wrapper}>
               <CopyButton textToCopy={currentUrl} />
               <ShareButton textToShare={currentUrl} />
