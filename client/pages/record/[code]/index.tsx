@@ -45,8 +45,9 @@ const Record: NextPage = () => {
 
   const getFirstData = async() => {
     const { code } = router.query;
-    console.log(code)
+    // console.log(code)
     if (typeof code === "string" ) {
+      console.log(code)
       const res: RecordDataType = await getRecordByURLCode(code);
       if (res != null) {
         setRecordData(res);
