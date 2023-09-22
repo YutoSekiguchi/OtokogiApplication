@@ -28,6 +28,7 @@ const Record: NextPage = () => {
 
   const [pays, setPays] = useState<PayDataType[]>([]);
   const [rankingData, setRankingData] = useState<RankingDataType[]>([]);
+  const [isShowAllPays, setIsShowAllPays] = useState<boolean>(false);
 
   const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
 
@@ -91,6 +92,29 @@ const Record: NextPage = () => {
     }
   }, [pays])
 
+  const PayList = ({list}: {list: PayDataType[]}) => {
+    return(
+      <>
+        {
+          list.map((pay, i) => (
+            <div key={i} className={styles.pay_el}>
+              <div className={styles.pay_el_left}>
+                <p className={styles.pay_detail}>{pay.detail}</p>
+                <p className={styles.pay_name_day}>{getMemberName(pay.mid)}の漢気&nbsp;({generateDayFormat(pay.date)})</p>
+              </div>
+              <div className={styles.pay_el_right}>
+                <p className={styles.pay_money}>{pay.price !== 0? `¥${addCommasToNumber(pay.price)}` : ""}</p>
+                <button className={styles.pay_edit_button} onClick={() => movePayEditPage(pay.id)}>
+                  <EntypoEdit className={styles.pay_edit_icon} />
+                </button>
+              </div>
+            </div>
+          ))
+        }
+      </>
+    )
+  }
+
   return (
     <div className="container">
       {
@@ -122,20 +146,13 @@ const Record: NextPage = () => {
               <>
                 <div className={styles.pay_list}>
                   {
-                    pays.map((pay, i) => (
-                      <div key={i} className={styles.pay_el}>
-                        <div className={styles.pay_el_left}>
-                          <p className={styles.pay_detail}>{pay.detail}</p>
-                          <p className={styles.pay_name_day}>{getMemberName(pay.mid)}の漢気&nbsp;({generateDayFormat(pay.date)})</p>
-                        </div>
-                        <div className={styles.pay_el_right}>
-                          <p className={styles.pay_money}>{pay.price !== 0? `¥${addCommasToNumber(pay.price)}` : ""}</p>
-                          <button className={styles.pay_edit_button} onClick={() => movePayEditPage(pay.id)}>
-                            <EntypoEdit className={styles.pay_edit_icon} />
-                          </button>
-                        </div>
-                      </div>
-                    ))
+                    isShowAllPays?
+                    <PayList list={pays} />
+                    :
+                    <>
+                      <PayList list={pays.slice(0, 7)} />
+                      <button className={styles.more_show_button} onClick={() => {setIsShowAllPays(true)}}>さらに表示する</button>
+                    </>
                   }
                 </div>
               </>
