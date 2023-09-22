@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { PostMemberDataType } from "../../@types/member";
+import { MemberDataType, PostMemberDataType } from "../../@types/member";
 import { PostRecordDataType, RecordDataType } from "../../@types/record";
 import { UserDataType, memberNameAndIDType } from "../../@types/user";
 import { generateSuggestions } from "../../modules/generateSuggestion";
 import { getRecordCode } from "../../modules/getRecordCode";
 import { getToday } from "../../modules/getToday";
 import { getFriendshipsByUID } from "../../services/friendships";
-import { postMember } from "../../services/member";
-import { postRecord } from "../../services/record";
+import { getMembersByRID, postMember } from "../../services/member";
+import { getRecordByURLCode, postRecord, updateRecordByID, updateRecordTitleByID } from "../../services/record";
 import styles from "../../styles/New.module.css"
 import { useMemberStore } from "../../stores/member";
 import { useRecordStore } from "../../stores/record";
@@ -15,6 +15,7 @@ import { useUserStore } from "../../stores/user";
 import { useRouter } from "next/router";
 import FriendCardImage from "../friend/FriendCardImage";
 import { CiCloseSm } from "../common/icons/CiCloseSm";
+import { findDifferentObjects } from "../../modules/edit/findDifferentObjects";
 
 interface Props {
   mode?: "edit" | "submit"
@@ -24,9 +25,11 @@ const EditForm = ({mode="submit"}: Props): JSX.Element => {
   const router = useRouter();
 
   const myUser = useUserStore((state) => state.user);
+  const [recordID, setRecordID] = useState<number>(0);
   const [groupName, setGroupName] = useState<string>('');
   const [memberName, setMemberName] = useState<string>('');
   const [memberList, setMemberList] = useState<memberNameAndIDType[]>([]);
+  const [prevMemberList, setPrevMemberList] = useState<memberNameAndIDType[]>([]);
   const [suggestions, setSuggestions] = useState<UserDataType[]>([]);
   const [myFriendList, setMyFriendList] = useState<UserDataType[]>([]);
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
@@ -34,15 +37,55 @@ const EditForm = ({mode="submit"}: Props): JSX.Element => {
   const setRecordData = useRecordStore((state) => state.setRecordData);
   const addMembers = useMemberStore((state) => state.addMembers);
 
-  useEffect(() => {
-    const getMyFriend = async() => {
-      if(myUser != null) {
-        const res = await getFriendshipsByUID(myUser.id);
-        setMyFriendList(res);
+  const getMyFriend = async() => {
+    if(myUser != null) {
+      const res = await getFriendshipsByUID(myUser.id);
+      setMyFriendList(res);
+    }
+  }
+
+  const getMemberData = async(rid: number) => {
+    const res = await getMembersByRID(rid);
+    if (res != null) {
+      let tmp: memberNameAndIDType[] = [];
+      res.map((member: MemberDataType) => {
+        if (myUser?.id !== member.uid) {
+          const foundFriend = myFriendList.find(myFriend => myFriend.id === member.uid);
+          if (foundFriend) {
+            tmp = [...tmp, {id: member.uid, displayName: member.name, image: foundFriend.image}]
+          } else {
+            tmp = [...tmp, {id: null, displayName: member.name, image: "/noimage.png"}]
+          }
+        }
+      })
+      setMemberList(tmp);
+      setPrevMemberList(tmp);
+    }
+  }
+
+  const getRecordData = async() => {
+    if(mode === "edit") {
+      const { code } = router.query;
+      if (typeof code === "string" ) {
+        const res: RecordDataType = await getRecordByURLCode(code);
+        if (res != null) {
+          await getMemberData(res.id);
+          setGroupName(res.title);
+          setRecordID(res.id);
+        }
       }
     }
+  }
+
+  useEffect(() => {
     getMyFriend();
   }, [myUser])
+
+  useEffect(() => {
+    if (myFriendList.length > 0) {
+      getRecordData();
+    }
+  }, [myFriendList])
 
   const changeGroupName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGroupName(e.target.value);
@@ -139,6 +182,44 @@ const EditForm = ({mode="submit"}: Props): JSX.Element => {
     }
   }
 
+  const changeRecord = async() => {
+    if (!isButtonDisabled) {
+      setIsButtonDisabled(true);
+
+      if (groupName !== "" && memberList.length > 0) {
+        const record: RecordDataType = await updateRecordTitleByID(recordID, groupName);
+        setRecordData(record);
+        // FIXME: 削除機能等に関して
+        const differentMembers = findDifferentObjects(memberList, prevMemberList);
+        if (record !== null && myUser !== null) {
+          for(let i=0; i<differentMembers.length; i++) {
+            const memberData: PostMemberDataType = {
+              uid: (differentMembers[i].id===null)? 0: differentMembers[i].id!,
+              name: differentMembers[i].displayName,
+              rid: record.id,
+              ranking: 1,
+              totalPrice: 0,
+              totalWin: 0,
+              totalDrive: 0,
+            }
+            const member = await postMember(memberData);
+            addMembers(member);
+          }
+          router.push(`/record/${record.urlCode}`);
+        } else {
+          alert("グループ編集に失敗しました");
+          return;
+        }
+      } else {
+        alert("グループ名とメンバーを埋めてください");
+        return;
+      }
+      setTimeout(() => {
+        setIsButtonDisabled(false);
+      }, 2000)
+    }
+  }
+
   return (
     <div className={styles.main}>
       <div className={styles.form_group}>
@@ -147,6 +228,7 @@ const EditForm = ({mode="submit"}: Props): JSX.Element => {
           type="text"
           className={styles.text_form} 
           placeholder="例）北海道旅行"
+          value={groupName}
           onChange={changeGroupName}
         ></input>
       </div>
@@ -207,14 +289,26 @@ const EditForm = ({mode="submit"}: Props): JSX.Element => {
             </div>
           </>
         }
-
-        <button
-          className={styles.submit_button}
-          onClick={submit}
-          disabled={isButtonDisabled}
-        >
-          グループ作成
-        </button>
+        {
+          mode === "submit" &&
+          <button
+            className={styles.submit_button}
+            onClick={submit}
+            disabled={isButtonDisabled}
+          >
+            グループ作成
+          </button>
+        }
+        {
+          mode === "edit" &&
+          <button
+            className={styles.submit_button}
+            onClick={changeRecord}
+            disabled={isButtonDisabled}
+          >
+            グループの変更
+          </button>
+        }
       </div>
     </div>
   );
