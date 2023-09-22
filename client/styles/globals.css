@@ -102,3 +102,15 @@ a {
 .checkbox-label {
   margin-left: 10px;
 }
+
+.first_rank {
+  color: #e6b422;
+}
+
+.second_rank {
+  color: #808080;
+}
+
+.third_rank {
+  color: #b87333;
+}

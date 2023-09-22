@@ -10,4 +10,13 @@ export interface PostRecordDataType {
   urlCode: string;
 }
 
+export interface RankingDataType {
+  uid: number;
+  mid: number;
+  rid: number;
+  totalPrice: number;
+  totalDrive: number;
+  totalDriveBeer: number;
+}
+
 export interface RecordDataType extends PostRecordDataType, IDAndCreatedAtType {}

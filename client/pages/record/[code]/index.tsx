@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import styles from "../../../styles/Reccord.module.css"
 import { getRecordByURLCode } from "../../../services/record";
 import { getMembersByRID } from "../../../services/member";
-import { RecordDataType } from "../../../@types/record";
+import { RankingDataType, RecordDataType } from "../../../@types/record";
 import { EvaArrowCircleUpOutline } from "../../../components/common/icons/EvaArrowCircleUpOutline";
 import CopyButton from "../../../components/record/CopyButton";
 import ShareButton from "../../../components/record/ShareButton";
@@ -14,6 +14,9 @@ import { PayDataType } from "../../../@types/pay";
 import { getPaysByRID } from "../../../services/pay";
 import { generateDayFormat } from "../../../modules/generateDayFormat";
 import { EntypoEdit } from "../../../components/common/icons/EntypoEdit";
+import { groupAndSortByPrice } from "../../../modules/record/generatePayDataSortByPrice";
+import { addCommasToNumber } from "../../../modules/addCommasToNumber";
+import { AkarIconsCrown } from "../../../components/common/icons/AkarIconsCrown";
 
 const Record: NextPage = () => {
 
@@ -24,6 +27,7 @@ const Record: NextPage = () => {
   const members = useMemberStore((state) => state.members);
 
   const [pays, setPays] = useState<PayDataType[]>([]);
+  const [rankingData, setRankingData] = useState<RankingDataType[]>([]);
 
   const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
 
@@ -80,6 +84,13 @@ const Record: NextPage = () => {
     getFirstData();
   }, [router])
 
+  useEffect(() => {
+    if (pays.length > 0) {
+      const sortByPrice = groupAndSortByPrice(pays);
+      setRankingData(sortByPrice);
+    }
+  }, [pays])
+
   return (
     <div className="container">
       {
@@ -118,7 +129,7 @@ const Record: NextPage = () => {
                           <p className={styles.pay_name_day}>{getMemberName(pay.mid)}の漢気&nbsp;({generateDayFormat(pay.date)})</p>
                         </div>
                         <div className={styles.pay_el_right}>
-                          <p className={styles.pay_money}>{pay.price !== 0? `¥${pay.price}` : ""}</p>
+                          <p className={styles.pay_money}>{pay.price !== 0? `¥${addCommasToNumber(pay.price)}` : ""}</p>
                           <button className={styles.pay_edit_button} onClick={() => movePayEditPage(pay.id)}>
                             <EntypoEdit className={styles.pay_edit_icon} />
                           </button>
@@ -138,6 +149,33 @@ const Record: NextPage = () => {
                 </div>
               </>
             }
+
+            <div className={styles.member_ranking}>
+              <p className={styles.member_ranking_title}>ランキング</p>
+              {
+                rankingData.map((data, i) => (
+                  <div className={styles.ranking_box} key={i}>
+                    <div className={styles.ranking_box_left}>
+                      {
+                        i==0&&
+                        <AkarIconsCrown color="#e6b422" />
+                      }
+                      {
+                        i==1&&
+                        <AkarIconsCrown color="#808080" />
+                      }
+                      {
+                        i==2&&
+                        <AkarIconsCrown color="#b87333" />
+                      }
+                      <p className={`${i==0? "first_rank": i==1? "second_rank": i==2? "third_rank": ""} bold-text`}>{i+1}位</p>
+                      <p className={styles.ranking_name}>{getMemberName(data.mid)}</p>
+                    </div>
+                    <p className={styles.ranking_price}>¥{addCommasToNumber(data.totalPrice)}</p>
+                  </div>
+                ))
+              }
+            </div>
 
             <div>
               <button

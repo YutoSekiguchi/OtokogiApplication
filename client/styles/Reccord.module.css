@@ -230,3 +230,27 @@
 .pay_edit_icon:hover {
   color: var(--c-gray-text);
 }
+
+.member_ranking {
+  max-width: 640px;
+  margin: 2rem auto 0 auto;
+}
+
+.member_ranking_title {
+  text-align: start;
+  font-size: 0.9rem;
+}
+
+.ranking_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--c-gray-border);
+}
+.ranking_name {
+  padding-left: 1rem;
+}
+.ranking_box_left {
+  display: flex;
+  align-items: center;
+}
