@@ -22,3 +22,13 @@ export const getMembersByRID = async(rid: number) => {
     throw(error);
   }
 }
+
+export const deleteMemberByID = async(id: number) => {
+  const url = `${MEMBER_API_URL}/${id}`;
+  try {
+    const res = await axios.delete(url);
+    return returnData(res);
+  } catch (error) {
+    throw(error);
+  }
+}

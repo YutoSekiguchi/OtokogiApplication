@@ -18,6 +18,7 @@ export const getRecordByURLCode = async(urlCode: string) => {
   const url = `${RECORD_API_URL}/get/urlcode/${urlCode}`
   try {
     const res = await axios.get(url);
+    console.log(res)
     return returnData(res);
   } catch (error) {
     throw(error);
@@ -38,6 +39,16 @@ export const updateRecordByID = async (id: number, data: PostRecordDataType) => 
   const url = `${RECORD_API_URL}/${id}`;
   try {
     const res = await axios.put(url, data);
+    return returnData(res);
+  } catch (error) {
+    throw(error);
+  }
+}
+
+export const updateRecordTitleByID = async (id: number, title: string) => {
+  const url = `${RECORD_API_URL}/${id}/change/title?newTitle=${title}`;
+  try {
+    const res = await axios.put(url);
     return returnData(res);
   } catch (error) {
     throw(error);
