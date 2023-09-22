@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,5 +65,15 @@ public class MemberController {
 	public ResponseEntity<Member> putMember(@PathVariable Long id, @RequestBody Member member) {
 		memberService.modify(id, member);
 		return ResponseEntity.ok(member);
+	}
+	
+	// 削除
+	@DeleteMapping("{id}")
+	public ResponseEntity<String> deleteMemberByID(@PathVariable Long id) {
+		if (!memberRepository.existsById(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		memberRepository.deleteById(id);
+		return ResponseEntity.ok("Successfully delete member!");
 	}
 }
