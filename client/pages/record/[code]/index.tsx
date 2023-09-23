@@ -146,7 +146,7 @@ const Record: NextPage = () => {
               <>
                 <div className={styles.pay_list}>
                   {
-                    isShowAllPays?
+                    isShowAllPays || pays.length <= 7?
                     <PayList list={pays} />
                     :
                     <>
