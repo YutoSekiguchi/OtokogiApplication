@@ -8,7 +8,7 @@ import styles from "../../styles/Reccord.module.css"
 import { useMemberStore } from "../../stores/member";
 import { PayDataType, PostPayDataType } from "../../@types/pay";
 import { getToday } from "../../modules/getToday";
-import { getPayByID, postPay, updatePayByID } from "../../services/pay";
+import { deletePayByID, getPayByID, postPay, updatePayByID } from "../../services/pay";
 import { stringToNumberArray } from "../../modules/stringToNumberArray";
 
 interface Props {
@@ -101,6 +101,15 @@ const PayEditForm = ({mode="submit"}: Props): JSX.Element => {
       setIsCheckDrive(false);
     }
     setIsCheckDriveBeer((prev) => !prev);
+  }
+
+  const deleteByID = async(id: number) => {
+    try {
+      await deletePayByID(id);
+      router.push(`/record/${router.query.code}`);
+    } catch (_) {
+      alert("削除に失敗しました");
+    }
   }
   
   const submit = async() => {
@@ -387,6 +396,16 @@ const PayEditForm = ({mode="submit"}: Props): JSX.Element => {
           戻る
         </button>
       </div>
+
+      {
+        mode=="edit" &&
+        <button
+          className={styles.delete_button}
+          onClick={() => deleteByID(Number(router.query.id))}
+        >
+          削除
+        </button>
+      }
     </div>
   );
 }

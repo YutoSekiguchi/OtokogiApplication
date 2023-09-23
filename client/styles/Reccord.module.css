@@ -189,6 +189,24 @@
   cursor: pointer;
 }
 
+.delete_button {
+  background: white;
+  color: var(--c-red);
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: var(--rounded-sm);
+  border: 0.8px solid var(--c-red);
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  cursor: pointer;
+}
+
 .pay_list {
 
 }
