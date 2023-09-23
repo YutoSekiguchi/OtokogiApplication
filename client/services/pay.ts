@@ -42,3 +42,13 @@ export const updatePayByID = async(id: number, data: PostPayDataType) => {
     throw(error);
   }
 }
+
+export const deletePayByID = async(id: number) => {
+  const url = `${PAY_API_URL}/${id}`;
+  try {
+    const res = await axios.delete(url);
+    return returnData(res);
+  } catch (error) {
+    throw(error);
+  }
+}
