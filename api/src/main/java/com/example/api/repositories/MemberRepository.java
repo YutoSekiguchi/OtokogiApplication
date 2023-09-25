@@ -13,6 +13,7 @@ import com.example.api.models.RecordModel;
 public interface MemberRepository extends JpaRepository<Member, Long> {
 	List<Member> findByUid(Long uid);
 	List<Member> findByRid(Long rid);
+//	long countByRid(Long rid);
 	
 	@Query("SELECT m.record FROM Member m WHERE m.uid = :userId")
     List<RecordModel> findRecordsByUserId(Long userId);

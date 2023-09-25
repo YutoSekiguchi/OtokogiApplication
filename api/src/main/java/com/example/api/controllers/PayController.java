@@ -1,5 +1,6 @@
 package com.example.api.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.api.models.Member;
 import com.example.api.models.Pay;
+import com.example.api.models.Transition;
+import com.example.api.repositories.MemberRepository;
 import com.example.api.repositories.PayRepository;
 import com.example.api.services.PayService;
 
@@ -22,14 +26,18 @@ import com.example.api.services.PayService;
 @RequestMapping("/pays")
 public class PayController {
 	private final PayRepository payRepository;
+	private final MemberRepository memberRepository;
 	
 	@Autowired
-	public PayController(PayRepository payRepository) {
+	public PayController(PayRepository payRepository, MemberRepository memberRepository) {
 		this.payRepository = payRepository;
+		this.memberRepository = memberRepository;
 	}
 	
 	@Autowired
 	private PayService payService;
+	
+	
 	
 	// idからpayの取得
 	@GetMapping("/get/{id}")
@@ -57,6 +65,45 @@ public class PayController {
 		List<Pay> gettedPays = payRepository.findByRid(rid);
 		return ResponseEntity.ok(gettedPays);
 	}
+	
+	@GetMapping("/get/{rid}/transition")
+    public ResponseEntity<List<Transition>> getPayTransitionDataByRecordId(@PathVariable Long rid) {
+    	List<Member> members = memberRepository.findByRid(rid);
+        List<Pay> payAndMemberData =  payRepository.findByRid(rid);
+        
+        List<Transition> transitions = new ArrayList<Transition>();
+       
+        for(Member member: members) {
+        	Transition transition = new Transition();
+        	transition.setMid(member.getId());
+        	transition.setUid(member.getUid());
+        	transition.setRid(rid);
+        	transition.setName(member.getName());
+        	transition.setDate(new ArrayList<String>());
+        	transition.setTransitionPrice(new ArrayList<Integer>());
+        	transition.setTransitionDrive(new ArrayList<Integer>());
+        	transition.setTransitionDriveBeer(new ArrayList<Integer>());
+        	transitions.add(transition);
+        }
+        
+        for(Pay pay: payAndMemberData) {
+        	Long mid = pay.getMid();
+        	Integer price = pay.getPrice();
+        	String date = pay.getDate();
+        	Integer drive = pay.getDrive();
+        	Integer driveBeer = pay.getDriveBeer();
+        	for(Transition transition: transitions) {
+        		if (mid == transition.getMid()) {
+        			transition.addTransitionData(date, price, drive, driveBeer);
+        		} else {
+        			transition.addTransitionData(date, 0, 0, 0);
+        		}
+        	}
+        }
+        
+        return ResponseEntity.ok(transitions);
+    }
+
 	
 	// 追加
 	@PostMapping("")
