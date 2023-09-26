@@ -19,11 +19,22 @@ export interface PayTransitionDataType {
   mid: number;
   uid: number;
   name: string;
-  date: string[];
+  priceDetail: string[];
+  priceDate: string[];
+  driveDate: string[];
+  driveBeerDate: string[];
   transitionPrice: number[];
   transitionDrive: number[];
   transitionDriveBeer: number[];
   lastTransitionPrice: number;
   lastTransitionDrive: number;
   lastTransitionDriveBeer: number;
+}
+
+export interface PayTransitionLineGraphDataType {
+  label: string;
+  data: number[];
+  borderColor: string;
+  backgroundColor: string;
+  tension?: number;
 }

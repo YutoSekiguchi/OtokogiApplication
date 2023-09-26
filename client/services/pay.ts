@@ -24,6 +24,16 @@ export const getPaysByRID = async(rid: number) => {
   }
 }
 
+export const getPayTransitionsByRID = async(rid: number) => {
+  const url = `${PAY_API_URL}/get/${rid}/transition`;
+  try {
+    const res = await axios.get(url);
+    return returnData(res);
+  } catch(error) {
+    throw(error);
+  }
+}
+
 export const postPay = async(data: PostPayDataType) => {
   try {
     const res = await axios.post(PAY_API_URL, data);

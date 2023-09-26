@@ -34,7 +34,7 @@
   text-align: center;
 }
 
-.add_record_button, .detail_result_button {
+.add_record_button, .detail_result_button, .back_page_button {
   width: 100%;
   max-width: 520px;
   border: 1px solid var(--c-primary);
@@ -48,6 +48,11 @@
 }
 .detail_result_button {
   margin-top: 2rem;
+}
+.back_page_button {
+  border: 3px solid var(--c-primary);
+  display: flex;
+  justify-content: center;
 }
 .arrow_icon_wrapper {
   margin-top: 1rem;
@@ -284,4 +289,20 @@
   cursor: pointer;
   font-weight: bold;
   font-size: 0.7rem;
+}
+
+.graph_canvas {
+  text-align: center;
+  border-bottom: 0.5px solid var(--c-gray-border);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  padding-top: 1rem;
+}
+
+.graph_canvas_title {
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bolder;
+  margin-top: 0px;
+  margin-bottom: 0.7rem;
 }

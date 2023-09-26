@@ -12,7 +12,7 @@ body {
 body {
   min-height: 100vh;
   position: relative;/*←相対位置*/
-  padding-bottom: 120px;/*←footerの高さ */
+  padding-bottom: 100px;
   box-sizing: border-box;
 }
 
@@ -35,6 +35,8 @@ a {
   --c-blue-bg-darker: rgb(50, 83, 97);
   --c-gray-bg-lighter: rgb(249, 250, 251);
 
+  --c-dark: #1E2433;
+
   --c-red: #ef4444;
 
   --c-gray-500: #d6e3ed;
@@ -51,6 +53,14 @@ a {
 
 .container {
   background-color: var(--c-secondary-bg);
+  margin-bottom: 2rem;
+}
+.graph_container {
+  background-color: var(--c-dark);
+  padding-left: 2rem;
+  padding-right: 2rem;
+  min-height: 100vh;
+  padding-bottom: 2rem;
 }
 .flex-start {
   display: flex;

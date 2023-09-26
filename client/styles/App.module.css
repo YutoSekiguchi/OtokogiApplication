@@ -95,7 +95,7 @@
 
 .footer {
   color: white;
-  /* min-height: 120px; */
+  min-height: 100px;
   width: 100vw;
   background-color: var(--c-blue-bg-darker);
   display: flex;

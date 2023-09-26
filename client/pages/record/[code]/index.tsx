@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { Metadata, NextPage } from "next";
 import { useRecordStore } from "../../../stores/record";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -17,6 +17,29 @@ import { EntypoEdit } from "../../../components/common/icons/EntypoEdit";
 import { groupAndSortByPrice } from "../../../modules/record/generatePayDataSortByPrice";
 import { addCommasToNumber } from "../../../modules/addCommasToNumber";
 import { AkarIconsCrown } from "../../../components/common/icons/AkarIconsCrown";
+import { PROJECT_NAME } from "../../../configs/settings";
+
+export async function generateMetadate(): Promise<Metadata> {
+  const router = useRouter();
+  const { code } = router.query;
+  let name = "";
+  if (typeof code === "string") {
+    const res: RecordDataType = await getRecordByURLCode(code);
+    if (res != null) {
+      name = res.title
+    }
+  }
+  return {
+    title: `${name} | ${PROJECT_NAME}`,
+    openGraph: {
+      title: `${name} | ${PROJECT_NAME}`,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${name} | ${PROJECT_NAME}`,
+    },
+  }
+}
 
 const Record: NextPage = () => {
 
@@ -197,6 +220,7 @@ const Record: NextPage = () => {
             <div>
               <button
                 className={styles.detail_result_button}
+                onClick={() => {router.push(`/record/${router.query.code}/detail`)}}
               >
                 詳細結果を見る
               </button>
