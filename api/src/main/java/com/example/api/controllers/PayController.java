@@ -79,7 +79,10 @@ public class PayController {
         	transition.setUid(member.getUid());
         	transition.setRid(rid);
         	transition.setName(member.getName());
-        	transition.setDate(new ArrayList<String>());
+        	transition.setPriceDetail(new ArrayList<String>());
+        	transition.setPriceDate(new ArrayList<String>());
+        	transition.setDriveDate(new ArrayList<String>());
+        	transition.setDriveBeerDate(new ArrayList<String>());
         	transition.setTransitionPrice(new ArrayList<Integer>());
         	transition.setTransitionDrive(new ArrayList<Integer>());
         	transition.setTransitionDriveBeer(new ArrayList<Integer>());
@@ -90,13 +93,28 @@ public class PayController {
         	Long mid = pay.getMid();
         	Integer price = pay.getPrice();
         	String date = pay.getDate();
+        	String detail = pay.getDetail();
         	Integer drive = pay.getDrive();
         	Integer driveBeer = pay.getDriveBeer();
         	for(Transition transition: transitions) {
-        		if (mid == transition.getMid()) {
-        			transition.addTransitionData(date, price, drive, driveBeer);
-        		} else {
-        			transition.addTransitionData(date, 0, 0, 0);
+        		if (price != 0) {        				
+	        		if (mid == transition.getMid()) {
+	        			transition.addTransitionData(date, price, drive, driveBeer, "price", detail);
+	        		} else {
+	        			transition.addTransitionData(date, 0, 0, 0, "price", detail);
+	        		}
+        		} else if (drive != 0) {
+        			if (mid == transition.getMid()) {
+        				transition.addTransitionData(date, price, drive, driveBeer, "drive", detail);
+        			} else {
+        				transition.addTransitionData(date, 0, 0, 0, "drive", detail);
+        			}
+        		} else if (driveBeer != 0) {
+        			if (mid == transition.getMid()) {
+        				transition.addTransitionData(date, price, drive, driveBeer, "driveBeer", detail);
+        			} else {
+        				transition.addTransitionData(date, 0, 0, 0, "driveBeer", detail);
+        			}
         		}
         	}
         }
